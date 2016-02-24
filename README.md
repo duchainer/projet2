@@ -1,2 +1,2 @@
 # TP1 : GestionEmploye
-Projet 2 en Introduction à la programmation.
+Projet 1 en Structures de données et programmation orientée objet.
