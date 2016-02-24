@@ -1,17 +1,17 @@
 import javax.swing.*;
 /**
- *1- Les attributs (choisir les types appropriés):
+ *1- Les attributs (choisir les types appropriÃ©s):
  * -nom
  * - prenom
  * - date de naissance (chaine de longueur fixe, format : JJMMAAAA)
  * - mot de passe
- * - nombre d’heures travaillées
+ * - nombre dâ€™heures travaillÃ©es
  * - taux horaire
- *2 - Dans la même classe, définir les méthodes suivantes :
- * - codeAcces() : qui retourne le code d’accès de l’employe en le construisant comme suit : 1ère lettre du prénom suivi par le nom complet suivi par les 2 derniers chiffres de l’année de naissance, le tout sans espace.
- * - initMotPasse() qui réinitialise le mot de passe de l’employé en lui attribuant la chaine crosemont
- * - salaireBrut() qui calcule et retourne le salaire brut de l’employé selon le nombre d’heures travaillées et le taux horaire de l’employé
- * - salaireNet(taux) qui retourne le salaire après déduction des taxes, selon le taux fourni en paramètre (en pourcentage).
+ *2 - Dans la mÃªme classe, dÃ©finir les mÃ©thodes suivantes :
+ * - codeAcces() : qui retourne le code dâ€™accÃ¨s de lâ€™employe en le construisant comme suit : 1Ã¨re lettre du prÃ©nom suivi par le nom complet suivi par les 2 derniers chiffres de lâ€™annÃ©e de naissance, le tout sans espace.
+ * - initMotPasse() qui rÃ©initialise le mot de passe de lâ€™employÃ© en lui attribuant la chaine crosemont
+ * - salaireBrut() qui calcule et retourne le salaire brut de lâ€™employÃ© selon le nombre dâ€™heures travaillÃ©es et le taux horaire de lâ€™employÃ©
+ * - salaireNet(taux) qui retourne le salaire aprÃ¨s dÃ©duction des taxes, selon le taux fourni en paramÃ¨tre (en pourcentage).
  *
  * Patrick Domingues
  *
@@ -22,36 +22,36 @@ public class Employe {
     int heures;
     double tauxHoraire;
 
-    //Retourne le code d'àccès de l'employé
+    //Retourne le code d'Ã ccÃ¨s de l'employÃ©
     public String codeAcces(){
         String code= prenom.charAt(0) + nom + date.substring(date.length()-2, date.length());
         return code ;
     }
 
-    //Réinitialise le mot de passe de l'employé
+    //RÃ©initialise le mot de passe de l'employÃ©
     public void initMotPasse(){
     	mdp = "crosemont";
     }
 
-    //Calcule et retourne le salaire brut de l'employé
+    //Calcule et retourne le salaire brut de l'employÃ©
     public double salaireBrut(){
         return tauxHoraire * heures;
     }
 
-    //Retourne le salaire après déduction des taxes (taxes en pourcentage)
+    //Retourne le salaire aprÃ¨s dÃ©duction des taxes (taxes en pourcentage)
     public double salaireNet(double taux){
         return salaireBrut()*(1-taux);
     }
 
-    //Constructeur : initialise le nom à "invité", et les autres paramètres à défaut
+    //Constructeur : initialise le nom Ã Â "invitÃ©", et les autres paramÃ¨tres Ã  dÃ©faut
     public Employe(){
-     	nom = "invité";
+     	nom = "invitÃ©";
 		prenom = "";
         date = "";
         mdp= "";
      }
 
-	//Constructeur avec paramètres: initialise le mot de passe à "crosemont", et les autres paramètres sont choisis par saisie
+	//Constructeur avec paramÃ¨tres: initialise le mot de passe Ã Â "crosemont", et les autres paramÃ¨tres sont choisis par saisie
 	public Employe(String unNom, String unPrenom, String uneDate){
 	 	nom = unNom;
 		prenom = unPrenom;
@@ -59,7 +59,10 @@ public class Employe {
 	 	mdp="crosemont";
 	 }
 
+	public String toString(){
+		return codeAcces()+", "+nom+", "+prenom+", "+date;
 
+	}
 
 
 
