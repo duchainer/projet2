@@ -49,7 +49,13 @@ public class GestionEmploye {
 					break;
 					
 				case 3://Lister employés : permet d’afficher la liste de tous les employés du département contenus (toString)
-					//TODO for loop qui fait le toString des employes
+					//DONE for loop qui fait le toString des employes
+					String liste;
+					for(int i = 0; i<dep1.nbrEmploye;i++){
+						liste+=tabEmploye[i];
+						liste+="\n";
+					}
+					JOptionPane.showMessageDialog(null, liste, "Liste des employés", JOptionPane.INFORMATION_MESSAGE);
 					break;
 
 				case 4://FAIT
