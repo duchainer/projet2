@@ -1,21 +1,21 @@
-/**	B - Dans le fichier  Departement.java, dÃ©finir la classe Departement
+/**	B - Dans le fichier  Departement.java, définir la classe Departement
  * 
- * 	1 - Les attributs (choisir les types appropriÃ©s): 
- * 		- nom dÃ©partement 
- * 		- nombre dâ€™employÃ©s 
- * 		- tableau dâ€™employÃ©s (20  au  max) 
- * 			DÃ©finir  un  main() et faire des tests au fur et Ã  mesure,
- *  		dans lequel vous crÃ©erez un  objet de cette classe 
- *  		et affichez ses informations, avec les donnÃ©es de votre choix. 
- * 	2 - Les mÃ©thodes 
+ * 	1 - Les attributs (choisir les types appropriés): 
+ * 		- nom département 
+ * 		- nombre d'employés 
+ * 		- tableau d'employés (20  au  max) 
+ * 			Définir  un  main() et faire des tests au fur et Ã  mesure,
+ *  		dans lequel vous créerez un  objet de cette classe 
+ *  		et affichez ses informations, avec les données de votre choix. 
+ * 	2 - Les méthodes 
  * 		- masseSalariale() : 
- * 			retourne  le  total  des salaires  bruts  de  tous  les  employÃ©s
- * 			figurant dans le tableau dâ€™employÃ©s 
+ * 			retourne  le  total  des salaires  bruts  de  tous  les  employés
+ * 			figurant dans le tableau d'employés 
  * 		- moyenne Salariale() :  
  * 			retourne  la  moyenne  des  salaires  bruts
- *   		de  tous  les  employÃ©s figurant dans le tableau dâ€™employÃ©s 
+ *   		de  tous  les  employés figurant dans le tableau d'employés 
  * 
- * @author RaphaÃ«l DuchaÃ®ne 19/02/2016
+ * @author Raphaël Duchaîne 19/02/2016
  * 
  * 
  */
@@ -28,18 +28,18 @@ public class Departement {
 	Employe[] tabEmploye=new Employe[MAX];
   //Constructeurs	
 	public Departement(){
-		this.nomDepartement="DÃ©partement par dÃ©faut";
+		this.nomDepartement="Département par défaut";
 	}
-	//Constructeur demandant le nom du dÃ©partement
+	//Constructeur demandant le nom du département
 	public Departement(String nomDepartement){
 		this.nomDepartement=nomDepartement;
 	}
 	//toString
 	public String toString(){
-		return nomDepartement+": "+nbrEmploye+" EmployÃ©s \n Masse Salariale: "+masseSalariale()+"\n Moyenne Salariale: "+moyenneSalariale();
+		return nomDepartement+": "+nbrEmploye+" Employés \n Masse Salariale: "+masseSalariale()+"\n Moyenne Salariale: "+moyenneSalariale();
 	}
 	
-  //MÃ©thodes
+  //Méthodes
 	//Calcul de la masse salariale
 	public double masseSalariale(){
 		double masse=0;
@@ -51,18 +51,18 @@ public class Departement {
 	public double moyenneSalariale(){
 		return masseSalariale()/nbrEmploye;
 	}
-	//MÃ©thode permettant d'ajouter un employÃ© au bout de tabEmploye
+	//Méthode permettant d'ajouter un employé au bout de tabEmploye
 	public void addEmploye(String nom,String prenom,String date,double salaireEmploye,int heures){
-		tabEmploye[nbrEmploye]=new Employe(nom,prenom,date,salaireEmploye,heures);
+		tabEmploye[nbrEmploye]=new Employe(nom,prenom,date,heures,salaireEmploye);
 		nbrEmploye++;
 	}
 	//Main pour tester la classe
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Departement dep1= new Departement("Programmation");
 		dep1.addEmploye(20);
 		System.out.println(dep1);
 		System.out.println("Masse salarial:"+dep1.moyenneSalariale());
 		System.out.println("Moyenne salarial:"+dep1.moyenneSalariale());
-	}
+	}*/
 
 }

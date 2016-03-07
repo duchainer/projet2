@@ -11,21 +11,21 @@ import javax.swing.JOptionPane;
  *   		 dont le code d’accès sera demandé au clavier
  * 3 - Lister employés : permet d’afficher la liste de tous les employés du département contenus dans le tableau,
  *    	leur nom, prénom, et salaires brut, un employé par ligne (Utilise Employe.toString())
- *    		Ex Résultat : PDomingues98, Domingues, Patrick, 2000$
+ *    		Exemple de Résultat : PDomingues98, Domingues, Patrick, 2000$
  * 4 - Statistiques : permet d’afficher le nom du département,
  *     	le nombre d’employés ainsi que la masse salariale et la moyenne salariale du département.
  * 5 - Quitter : permet de terminer l’application
  *
  *
- * @author Raphael Duchaine
- *
+ * @author Raphael Duchaine 24/01/2016
+ * @author2 Patrick Domingues 05/03/2016
  */
 public class GestionEmploye {
 
 	public static void main(String[] args) {
 
 		//Initialisation des variables
-        String liste="", newCode= "";
+        String liste="", codeSaisi= "";
 		int option=0;
 		//Déclaration et création de l'objet département
         Departement dep1 = new Departement("Informatique");
@@ -40,16 +40,21 @@ public class GestionEmploye {
 			// les différentes options du menu
 			switch(option){
 				case 1:  // Demande la saisie de tous les attributs d'un employe et affiche un message de confirmation
-						if (JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer un employé?", "Enregistrement",
+						if(dep1.nbrEmploye>=dep1.MAX){
+							JOptionPane.showMessageDialog(null,"Il y a déjà 20 employés (C'est le maximum)","Enregistrer un employé DE TROP", JOptionPane.ERROR_MESSAGE);
+							break;
+						}
+							
+					if (JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer un employé?", "Enregistrement",
 						        JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
 							break;
 
                                                 //création de l'objet Employe dans une nouvelle case du tableau tabEmploye
 						dep1.tabEmploye[dep1.nbrEmploye] = new Employe(JOptionPane.showInputDialog(null,"Nom de famille de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE),
 						JOptionPane.showInputDialog(null,"Prénom de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE ),
-						JOptionPane.showInputDialog(null,"Date de naissance de l'employé?(en format JJ/MM/AAAA): ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE ),
-						Double.parseDouble(JOptionPane.showInputDialog(null,"taux horaire de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE)),
-						Integer.parseInt(JOptionPane.showInputDialog(null,"nombre d'heures travaillées de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE)));
+						JOptionPane.showInputDialog(null,"Date de naissance de l'employé?(en format JJ/MM/AAAA): ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE),
+						Integer.parseInt(JOptionPane.showInputDialog(null,"nombre d'heures travaillées de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE)),
+								Double.parseDouble(JOptionPane.showInputDialog(null,"taux horaire de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE)));
 
 						//NOTE: La date de naissance de l'employe dois avoir la forme requise, sinon sa marche pas (à cause du substring dans Employe)
 					 	JOptionPane.showMessageDialog(null,"compte enregistré: " + dep1.tabEmploye[dep1.nbrEmploye].codeAcces(),"Enregistrer un employé", JOptionPane.INFORMATION_MESSAGE);
@@ -62,33 +67,36 @@ public class GestionEmploye {
 				case 2:	//Affiche Employé: permet d’afficher les informations d’un employé du département dont le code d’accès sera demandé au clavier
 
                                                 //Saisie du code à recherche
-						newCode = JOptionPane.showInputDialog(null,"Veillez entrer le Code d'accès de l'employé en question: ","Afficher employé",JOptionPane.QUESTION_MESSAGE);
+						codeSaisi = JOptionPane.showInputDialog(null,"Veillez entrer le Code d'accès de l'employé en question: ","Afficher employé",JOptionPane.QUESTION_MESSAGE);
 						boolean trouve=false;
 	    				for (int i=0; i<dep1.nbrEmploye; i++){
 
-	                                                        //recherche le code identique à celui saisi
-								if(newCode.equals(dep1.tabEmploye[i].codeAcces())){
-									JOptionPane.showMessageDialog(null,"'"+newCode+"'\nNom: "+dep1.tabEmploye[i].nom+
-									"\nPrénom: "+dep1.tabEmploye[i].prenom+"\nDate de naissance: "+dep1.tabEmploye[i].date+
-									"\nMot de passe: "+dep1.tabEmploye[i].mdp+"\nheures: "+dep1.tabEmploye[i].heures+
-									"\nTaux horaire: "+dep1.tabEmploye[i].tauxHoraire,"Infos",JOptionPane.INFORMATION_MESSAGE);
+	                          //recherche le code identique à celui saisi
+								if(codeSaisi.equals(dep1.tabEmploye[i].codeAcces())){
+									//Affiche les informations de l'employe voulu (Utilisation de afficher() 
+									JOptionPane.showMessageDialog(null,dep1.tabEmploye[i].afficher(),"Infos",JOptionPane.INFORMATION_MESSAGE);
+									//on s'arrête à la première personne avec le code
 									trouve=true;
-									break;//on s'arrête à la première personne avec le code
+									break;
 								}
-
 	    				}
-	    				if (trouve)break;
-	    				//Message pour signaler un code nonexistant (ou erroné)
+	    				if (trouve) //Si le code a été trouver, sortir
+	    					break;
+	    				
+	    				//Message pour signaler un code inexistant (ou erroné)
 	    				JOptionPane.showMessageDialog(null,"Le code entré est non existant ou erroné.","Afficher employé",JOptionPane.QUESTION_MESSAGE);
 
 						break;
 
-				case 3:	//Lister employés : permet d’afficher la liste de tous les employés du département contenus (toString)
-
+				case 3:	//Lister employés : permet d’afficher la liste de tous les employés du département contenus (Utilisation du toString() d'Employe)
+					if(dep1.nbrEmploye<1){
+						JOptionPane.showMessageDialog(null, "Aucun Employé...");
+						break;
+					}
+					
 					for (int i=0; i<dep1.nbrEmploye; i++)
 						//message qui contient les informations de tous les employés
-                                                liste+="#"+(i+1)+", "+dep1.tabEmploye[i].nom+", "+dep1.tabEmploye[i].prenom+", "+dep1.tabEmploye[i].salaireBrut()+"\n";
-
+                                                liste+=dep1.tabEmploye[i].toString()+"\n";
 					//On affiche la liste
 					JOptionPane.showMessageDialog(null, liste,"Liste des employés", JOptionPane.INFORMATION_MESSAGE);
 
@@ -97,7 +105,7 @@ public class GestionEmploye {
 					break;
 
 				case 4: //AFFICHE TOUTES LES INFORMATIONS SUR DEPARTEMENT
-					//toString dans departement
+					//Utilisation du toString() de Departement
 					JOptionPane.showMessageDialog(null, dep1.toString(), "Statistiques", JOptionPane.INFORMATION_MESSAGE);
 					 break;
 
