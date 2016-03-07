@@ -1,83 +1,123 @@
 import javax.swing.JOptionPane;
 
-/** 
- * C - Dans le fichier GestionEmploye.java, dÃ©finir la classe principale GestionEmploye , avec un main() dans lequel :
- * 		- Un objet dÃ©partement est crÃ©Ã© avec un nom fixe (non demandÃ©) de votre choix, et avec aucun employÃ© au dÃ©part ,
- *  	puis un menu rÃ©pÃ©titif offre les options suivantes :
- * 1 - Enregistrer employÃ© : un objet EmployÃ© est crÃ©Ã© avec les valeurs lues au clavier ,
- *    cet objet sera placÃ© dans le tableau dâ€™ employÃ©s du dÃ©partement.
- *     Un message confirmera lâ€™enregistrement de lâ€™employÃ© en affichant son code dâ€™accÃ¨s.
- * 2 - Afficher employÃ© : permet dâ€™afficher les informations dâ€™un employÃ© du dÃ©partement
- *   		 dont le code dâ€™accÃ¨s sera demandÃ© au clavier
- * 3 - Lister employÃ©s : permet dâ€™afficher la liste de tous les employÃ©s du dÃ©partement contenus dans le tableau,
- *    	leur nom, prÃ©nom, et salaires brut, un employÃ© par ligne (Utilise Employe.toString())
- *    		Ex RÃ©sultat : PDomingues98, Domingues, Patrick, 2000$ 
- * 4 - Statistiques : permet dâ€™afficher le nom du dÃ©partement,
- *     	le nombre dâ€™employÃ©s ainsi que la masse salariale et la moyenne salariale du dÃ©partement. 
- * 5 - Quitter : permet de terminer lâ€™application
- * 
- * 
- * @author Raphael Duchaine 24/01/2016
- * @author2
+/**
+ * C - Dans le fichier GestionEmploye.java, définir la classe principale GestionEmploye , avec un main() dans lequel :
+ * 		- Un objet département est créé avec un nom fixe (non demandé) de votre choix, et avec aucun employé au départ ,
+ *  	puis un menu répétitif offre les options suivantes :
+ * 1 - Enregistrer employé : un objet Employé est créé avec les valeurs lues au clavier ,
+ *    cet objet sera placé dans le tableau d’ employés du département.
+ *     Un message confirmera l’enregistrement de l’employé en affichant son code d’accès.
+ * 2 - Afficher employé : permet d’afficher les informations d’un employé du département
+ *   		 dont le code d’accès sera demandé au clavier
+ * 3 - Lister employés : permet d’afficher la liste de tous les employés du département contenus dans le tableau,
+ *    	leur nom, prénom, et salaires brut, un employé par ligne (Utilise Employe.toString())
+ *    		Ex Résultat : PDomingues98, Domingues, Patrick, 2000$
+ * 4 - Statistiques : permet d’afficher le nom du département,
+ *     	le nombre d’employés ainsi que la masse salariale et la moyenne salariale du département.
+ * 5 - Quitter : permet de terminer l’application
+ *
+ *
+ * @author Raphael Duchaine
+ *
  */
 public class GestionEmploye {
 
 	public static void main(String[] args) {
+
+		//Initialisation des variables
+        String liste="", newCode= "";
 		int option=0;
-		Departement dep1 = new Departement("Informatique");
-		//menu rÃ©pÃ©titif
+		//Déclaration et création de l'objet département
+        Departement dep1 = new Departement("Informatique");
+        dep1.nbrEmploye=0;
+		//menu répétitif
 		do{
 			//affichage du menu et saisie de l'option
 			 option=Integer.parseInt(JOptionPane.showInputDialog(null,
-					 "Choisir:\n 1: Enregistrer employÃ©\n 2: Afficher employÃ©\n 3: Lister employÃ©s\n 4: Statistiques \n 5:Quitter",
+					 "Choisir:\n 1: Enregistrer employé\n 2: Afficher employé\n 3: Lister employés\n 4: Statistiques \n 5: Quitter",
 					 "Gestion des ressources Humaines\n AKA ton poste de travail",JOptionPane.QUESTION_MESSAGE));
-			// les diffÃ©rentes options du menu
+
+			// les différentes options du menu
 			switch(option){
-				case 1:  // Demande la saisie de tous les attributs d'un employe et affiche un message de confirmation 
-						if (JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer un employÃ©?", "Enregistrement",
-						        JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) 
+				case 1:  // Demande la saisie de tous les attributs d'un employe et affiche un message de confirmation
+						if (JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer un employé?", "Enregistrement",
+						        JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
 							break;
-						
-					 	//crÃ©ation d'un objet Employe (Demande de saisie au clavier)
-					 	
+
+                                                //création de l'objet Employe dans une nouvelle case du tableau tabEmploye
+						dep1.tabEmploye[dep1.nbrEmploye] = new Employe(JOptionPane.showInputDialog(null,"Nom de famille de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE),
+						JOptionPane.showInputDialog(null,"Prénom de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE ),
+						JOptionPane.showInputDialog(null,"Date de naissance de l'employé?(en format JJ/MM/AAAA): ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE ),
+						Double.parseDouble(JOptionPane.showInputDialog(null,"taux horaire de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE)),
+						Integer.parseInt(JOptionPane.showInputDialog(null,"nombre d'heures travaillées de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE)));
+
+						//NOTE: La date de naissance de l'employe dois avoir la forme requise, sinon sa marche pas (à cause du substring dans Employe)
+					 	JOptionPane.showMessageDialog(null,"compte enregistré: " + dep1.tabEmploye[dep1.nbrEmploye].codeAcces(),"Enregistrer un employé", JOptionPane.INFORMATION_MESSAGE);
+
+                                                //prend en compte le nombre d'employe (à remplacer)
+                                                dep1.nbrEmploye++;
+
 						break;
-						
-				case 2://Affiche EmployÃ©: permet dâ€™afficher les informations dâ€™un employÃ© du dÃ©partement dont le code dâ€™accÃ¨s sera demandÃ© au clavier
-						
-					//TODO Trouver EmployÃ© par code d'accÃ¨s et affichÃ© ses information par toString
-					
-					break;
-					
-				case 3://Lister employÃ©s : permet dâ€™afficher la liste de tous les employÃ©s du dÃ©partement contenus (toString)
-					//DONE for loop qui fait le toString des employes
-					String liste;
-					for(int i = 0; i<dep1.nbrEmploye;i++){
-						liste+=tabEmploye[i];
-						liste+="\n";
-					}
-					JOptionPane.showMessageDialog(null, liste, "Liste des employÃ©s", JOptionPane.INFORMATION_MESSAGE);
+
+				case 2:	//Affiche Employé: permet d’afficher les informations d’un employé du département dont le code d’accès sera demandé au clavier
+
+                                                //Saisie du code à recherche
+						newCode = JOptionPane.showInputDialog(null,"Veillez entrer le Code d'accès de l'employé en question: ","Afficher employé",JOptionPane.QUESTION_MESSAGE);
+						boolean trouve=false;
+	    				for (int i=0; i<dep1.nbrEmploye; i++){
+
+	                                                        //recherche le code identique à celui saisi
+								if(newCode.equals(dep1.tabEmploye[i].codeAcces())){
+									JOptionPane.showMessageDialog(null,"'"+newCode+"'\nNom: "+dep1.tabEmploye[i].nom+
+									"\nPrénom: "+dep1.tabEmploye[i].prenom+"\nDate de naissance: "+dep1.tabEmploye[i].date+
+									"\nMot de passe: "+dep1.tabEmploye[i].mdp+"\nheures: "+dep1.tabEmploye[i].heures+
+									"\nTaux horaire: "+dep1.tabEmploye[i].tauxHoraire,"Infos",JOptionPane.INFORMATION_MESSAGE);
+									trouve=true;
+									break;//on s'arrête à la première personne avec le code
+								}
+
+	    				}
+	    				if (trouve)break;
+	    				//Message pour signaler un code nonexistant (ou erroné)
+	    				JOptionPane.showMessageDialog(null,"Le code entré est non existant ou erroné.","Afficher employé",JOptionPane.QUESTION_MESSAGE);
+
+						break;
+
+				case 3:	//Lister employés : permet d’afficher la liste de tous les employés du département contenus (toString)
+
+					for (int i=0; i<dep1.nbrEmploye; i++)
+						//message qui contient les informations de tous les employés
+                                                liste+="#"+(i+1)+", "+dep1.tabEmploye[i].nom+", "+dep1.tabEmploye[i].prenom+", "+dep1.tabEmploye[i].salaireBrut()+"\n";
+
+					//On affiche la liste
+					JOptionPane.showMessageDialog(null, liste,"Liste des employés", JOptionPane.INFORMATION_MESSAGE);
+
+					//On réinitialise la liste, sinon elle s'accumulera a chaque répétition
+					liste="";
 					break;
 
-				case 4://FAIT
-						//AFFICHE TOUTES LES INFORMATIONS SUR DEPARTEMENT
+				case 4: //AFFICHE TOUTES LES INFORMATIONS SUR DEPARTEMENT
 					//toString dans departement
 					JOptionPane.showMessageDialog(null, dep1.toString(), "Statistiques", JOptionPane.INFORMATION_MESSAGE);
 					 break;
-					 
-				case 5://QUITTER(FAIT)
+
+
+				case 5://QUITTER
+                                        //Option avec oui/non pour quitter le programme
 					int reponse =JOptionPane.showConfirmDialog(null, "Le metier de gestionnaire te fait peur?",
-							"Se Sauver de ses responsabilitÃ©s",JOptionPane.YES_NO_OPTION);
+							"Se Sauver de ses responsabilités",JOptionPane.YES_NO_OPTION);
 					if(reponse==JOptionPane.YES_OPTION)
 						break;
 					else{option = 0;
 						break;
 						}
+
 				default:
-					JOptionPane.showMessageDialog(null, "Hey, le Nouveau! \nFais attention, tu mets ce dÃ©partement en danger!");
+					JOptionPane.showMessageDialog(null, "Hey, le Nouveau! \nFais attention, tu mets ce département en danger!");
 				}//fin switch
 
 			}while(option!=5);
-	
+
 	}
 
 }
