@@ -55,8 +55,8 @@ public class Employe {
 	public Employe(String unNom, String unPrenom, String uneDate, int desHeures, double unTauxHoraire){
 	 	nom = unNom;
 		prenom = unPrenom;
-        date = uneDate;
-	 	mdp = "crosemont";
+        	date = uneDate;
+	 	initMotPasse();
 	 	heures = desHeures;
 	 	tauxHoraire = unTauxHoraire;
 
