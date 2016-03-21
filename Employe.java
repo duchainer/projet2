@@ -66,10 +66,10 @@ public class Employe {
 		return codeAcces()+
 				"\nNom: "+nom+
 				"\nPrénom: "+prenom+
-				"\nDate de naissance: "+date+
+				"\nDate de naissance(JJ/MM/AAAA): "+date+
 				"\nMot de passe: "+mdp+""+
 				"\nheures: "+heures+
-				"\nTaux horaire: "+tauxHoraire;
+				" heures\nTaux horaire: "+tauxHoraire+"$/heures";
 		
 	}
 	@Override
