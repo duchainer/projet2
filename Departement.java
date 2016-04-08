@@ -23,38 +23,60 @@
 public class Departement {
   //Attributs
 	final int MAX=20;
-	String nomDepartement;
-	int nbrEmploye;
-	Employe[] tabEmploye=new Employe[MAX];
-  //Constructeurs	
+	private String nomDepartement;
+	private int nbrEmploye;
+	private Employe[] tabEmploye=new Employe[MAX];
+  
+	public Employe getTabEmploye(int i) {
+		return tabEmploye[i];
+	}
+	public void setTabEmploye(int i,Employe employe) {
+		this.tabEmploye[i] = employe;
+	}
+	
+	public int getNbrEmploye() {
+		return nbrEmploye;
+	}
+	public void setNbrEmploye(int nbrEmploye) {
+		this.nbrEmploye = nbrEmploye;
+	}
+	
+	public String getNomDepartement() {
+		return nomDepartement;
+	}
+	public void setNomDepartement(String nomDepartement) {
+		this.nomDepartement = nomDepartement;
+	}
+	
+	//Constructeurs	
 	public Departement(){
-		this.nomDepartement="Departement par defaut";
+		this.setNomDepartement("Departement par defaut");
 	}
 	//Constructeur demandant le nom du departement
 	public Departement(String nomDepartement){
-		this.nomDepartement=nomDepartement;
+		this.setNomDepartement(nomDepartement);
 	}
 	//toString
 	public String toString(){
-		return nomDepartement+": "+nbrEmploye+" Employes \n Masse Salariale: "+masseSalariale()+"\n Moyenne Salariale: "+moyenneSalariale();
+		return getNomDepartement()+": "+getNbrEmploye()+" Employes \n Masse Salariale: "+masseSalariale()+"\n Moyenne Salariale: "+moyenneSalariale();
 	}
 	
-  //Methodes
+	//Autres Methodes
 	//Calcul de la masse salariale
 	public double masseSalariale(){
 		double masse=0;
-		for(int i=0;i<nbrEmploye;i++)
-			masse+=tabEmploye[i].salaireBrut();
+		for(int i=0;i<getNbrEmploye();i++)
+			masse+=getTabEmploye(i).salaireBrut();
 		
 		return masse;	
 	}//Calcul de la moyenne salariale 
 	public double moyenneSalariale(){
-		return masseSalariale()/nbrEmploye;
+		return masseSalariale()/getNbrEmploye();
 	}
 	//Methode permettant d'ajouter un employe au bout de tabEmploye
 	public void addEmploye(String nom,String prenom,String date,double salaireEmploye,int heures){
-		tabEmploye[nbrEmploye]=new Employe(nom,prenom,date,heures,salaireEmploye);
-		nbrEmploye++;
+		setTabEmploye(getNbrEmploye(),new Employe(nom,prenom,date,heures,salaireEmploye));
+		setNbrEmploye(getNbrEmploye() + 1);
 	}
 	//Main pour tester la classe
 	/*public static void main(String[] args) {
