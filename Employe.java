@@ -18,66 +18,109 @@ import javax.swing.*;
  */
 public class Employe {
 	//Attributs
-    String nom, prenom, date, motDePasse;
-    int heures;
-    double tauxHoraire;
+    private String nom, prenom, date, motDePasse;
+    private int heures;
+    private double tauxHoraire;
 
-    //Retourne le code d' accès de l'employé
+    //Get-Set
+	public String getNom() {
+		return nom;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	
+	public String getPrenom() {
+		return prenom;
+	}
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getMotDePasse() {
+		return motDePasse;
+	}
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
+
+	public int getHeures() {
+		return heures;
+	}
+	public void setHeures(int heures) {
+		this.heures = heures;
+	}
+
+	public double getTauxHoraire() {
+		return tauxHoraire;
+	}
+	public void setTauxHoraire(double tauxHoraire) {
+		this.tauxHoraire = tauxHoraire;
+	}
+
+	//Constructeur : initialise le nom  "invité", et les autres paramètres a  défaut
+    public Employe(){
+     	setNom("invité");
+		setPrenom("");
+        setDate("");
+        setMotDePasse("");
+     }
+
+	//Constructeur avec paramètres: initialise le mot de passe par "crosemont", et les autres paramètres sont choisis par saisie
+	public Employe(String unNom, String unPrenom, String uneDate, int desHeures, double unTauxHoraire){
+	 	setNom(unNom);
+		setPrenom(unPrenom);
+        setDate(uneDate);
+	 	initMotPasse();
+	 	setHeures(desHeures);
+	 	setTauxHoraire(unTauxHoraire);
+
+	 }
+	//accès aux informations
+	public String afficher(){
+		return codeAcces()+
+				"\nNom: "+getNom()+
+				"\nPrénom: "+getPrenom()+
+				"\nDate de naissance(JJ/MM/AAAA): "+getDate()+
+				"\nMot de passe: "+getMotDePasse()+""+
+				"\nheures: "+getHeures()+
+				" heures\nTaux horaire: "+getTauxHoraire()+"$/heures";
+		
+	}
+	@Override
+	public String toString(){
+		return codeAcces()+", "+getNom()+", "+getPrenom()+", "+salaireBrut();
+
+	}
+	
+	//Autres méthodes
+	//Retourne le code d' accès de l'employé
     public String codeAcces(){
-        String code= prenom.charAt(0) + nom + date.substring(date.length()-2, date.length());
+        String code= getPrenom().charAt(0) + getNom() + getDate().substring(getDate().length()-2, getDate().length());
         return code ;
     }
 
     //Réinitialise le mot de passe de l'employé
     public void initMotPasse(){
-    	motDePasse = "crosemont";
+    	setMotDePasse("crosemont");
     }
 
     //Calcule et retourne le salaire brut de l'employé
     public double salaireBrut(){
-        return tauxHoraire * heures;
+        return getTauxHoraire() * getHeures();
     }
 
     //Retourne le salaire après déduction des taxes (taxes en pourcentage)
     public double salaireNet(double taux){
         return salaireBrut()*(1-taux);
     }
-
-    //Constructeur : initialise le nom  "invité", et les autres paramètres a  défaut
-    public Employe(){
-     	nom = "invité";
-		prenom = "";
-        date = "";
-        motDePasse= "";
-     }
-
-	//Constructeur avec paramètres: initialise le mot de passe par "crosemont", et les autres paramètres sont choisis par saisie
-	public Employe(String unNom, String unPrenom, String uneDate, int desHeures, double unTauxHoraire){
-	 	nom = unNom;
-		prenom = unPrenom;
-        	date = uneDate;
-	 	initMotPasse();
-	 	heures = desHeures;
-	 	tauxHoraire = unTauxHoraire;
-
-	 }
-
-	public String afficher(){
-		return codeAcces()+
-				"\nNom: "+nom+
-				"\nPrénom: "+prenom+
-				"\nDate de naissance(JJ/MM/AAAA): "+date+
-				"\nMot de passe: "+motDePasse+""+
-				"\nheures: "+heures+
-				" heures\nTaux horaire: "+tauxHoraire+"$/heures";
-		
-	}
-	@Override
-	public String toString(){
-		return codeAcces()+", "+nom+", "+prenom+", "+salaireBrut();
-
-	}
-
 
 	//main (sert uniquement a tester)
 	public static void main(String[] args){
