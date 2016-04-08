@@ -48,7 +48,7 @@ public class Employe {
      	nom = "invité";
 		prenom = "";
         date = "";
-        mdp= "";
+        motDePasse= "";
      }
 
 	//Constructeur avec paramètres: initialise le mot de passe par "crosemont", et les autres paramètres sont choisis par saisie
@@ -67,7 +67,7 @@ public class Employe {
 				"\nNom: "+nom+
 				"\nPrénom: "+prenom+
 				"\nDate de naissance(JJ/MM/AAAA): "+date+
-				"\nMot de passe: "+mdp+""+
+				"\nMot de passe: "+motDePasse+""+
 				"\nheures: "+heures+
 				" heures\nTaux horaire: "+tauxHoraire+"$/heures";
 		
