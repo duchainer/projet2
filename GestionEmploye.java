@@ -29,7 +29,7 @@ public class GestionEmploye {
 		int option=0;
 		//Déclaration et création de l'objet département
         Departement dep1 = new Departement("Informatique");
-        dep1.nbrEmploye=0;
+        dep1.setNbrEmploye(0);
 		//menu répétitif
 		do{
 			//affichage du menu et saisie de l'option
@@ -40,7 +40,7 @@ public class GestionEmploye {
 			// les différentes options du menu
 			switch(option){
 				case 1:  // Demande la saisie de tous les attributs d'un employe et affiche un message de confirmation
-						if(dep1.nbrEmploye>=dep1.MAX){
+						if(dep1.getNbrEmploye()>=dep1.MAX){
 							JOptionPane.showMessageDialog(null,"Il y a déjà 20 employés (C'est le maximum)","Enregistrer un employé DE TROP", JOptionPane.ERROR_MESSAGE);
 							break;
 						}
@@ -50,17 +50,17 @@ public class GestionEmploye {
 							break;
 
                                                 //création de l'objet Employe dans une nouvelle case du tableau tabEmploye
-						dep1.tabEmploye[dep1.nbrEmploye] = new Employe(JOptionPane.showInputDialog(null,"Nom de famille de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE),
+						dep1.setTabEmploye(dep1.getNbrEmploye(),new Employe(JOptionPane.showInputDialog(null,"Nom de famille de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE),
 						JOptionPane.showInputDialog(null,"Prénom de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE ),
 						JOptionPane.showInputDialog(null,"Date de naissance de l'employé?(en format JJMMAAAA): ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE),
 						Integer.parseInt(JOptionPane.showInputDialog(null,"nombre d'heures travaillées de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE)),
-								Double.parseDouble(JOptionPane.showInputDialog(null,"taux horaire de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE)));
+								Double.parseDouble(JOptionPane.showInputDialog(null,"taux horaire de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE))));
 
 						//NOTE: La date de naissance de l'employe dois avoir la forme requise, sinon sa marche pas (à cause du substring dans Employe)
-					 	JOptionPane.showMessageDialog(null,"compte enregistré: " + dep1.tabEmploye[dep1.nbrEmploye].codeAcces(),"Enregistrer un employé", JOptionPane.INFORMATION_MESSAGE);
+					 	JOptionPane.showMessageDialog(null,"compte enregistré: " + dep1.getTabEmploye(dep1.getNbrEmploye()).codeAcces(),"Enregistrer un employé", JOptionPane.INFORMATION_MESSAGE);
 
                                                 //prend en compte le nombre d'employe (à remplacer)
-                                                dep1.nbrEmploye++;
+                                                dep1.setNbrEmploye(dep1.getNbrEmploye() + 1);
 
 						break;
 
@@ -69,12 +69,12 @@ public class GestionEmploye {
                                                 //Saisie du code à recherche
 						codeSaisi = JOptionPane.showInputDialog(null,"Veillez entrer le Code d'accès de l'employé en question: ","Afficher employé",JOptionPane.QUESTION_MESSAGE);
 						boolean trouve=false;
-	    				for (int i=0; i<dep1.nbrEmploye; i++){
+	    				for (int i=0; i<dep1.getNbrEmploye(); i++){
 
 	                          //recherche le code identique à celui saisi
-								if(codeSaisi.equals(dep1.tabEmploye[i].codeAcces())){
+								if(codeSaisi.equals(dep1.getTabEmploye(i).codeAcces())){
 									//Affiche les informations de l'employe voulu (Utilisation de afficher() 
-									JOptionPane.showMessageDialog(null,dep1.tabEmploye[i].afficher(),"Infos",JOptionPane.INFORMATION_MESSAGE);
+									JOptionPane.showMessageDialog(null,dep1.getTabEmploye(i).afficher(),"Infos",JOptionPane.INFORMATION_MESSAGE);
 									//on s'arrête à la première personne avec le code
 									trouve=true;
 									break;
@@ -89,14 +89,14 @@ public class GestionEmploye {
 						break;
 
 				case 3:	//Lister employés : permet d’afficher la liste de tous les employés du département contenus (Utilisation du toString() d'Employe)
-					if(dep1.nbrEmploye<1){
+					if(dep1.getNbrEmploye()<1){
 						JOptionPane.showMessageDialog(null, "Aucun Employé...");
 						break;
 					}
 					
-					for (int i=0; i<dep1.nbrEmploye; i++)
+					for (int i=0; i<dep1.getNbrEmploye(); i++)
 						//message qui contient les informations de tous les employés
-                                                liste+=dep1.tabEmploye[i].toString()+"\n";
+                                                liste+=dep1.getTabEmploye(i).toString()+"\n";
 					//On affiche la liste
 					JOptionPane.showMessageDialog(null, liste,"Liste des employés", JOptionPane.INFORMATION_MESSAGE);
 
