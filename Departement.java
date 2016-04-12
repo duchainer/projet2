@@ -58,7 +58,11 @@ public class Departement {
 	}
 	//toString
 	public String toString(){
-		return getNomDepartement()+": "+getNbrEmploye()+" Employes \n Masse Salariale: "+masseSalariale()+"\n Moyenne Salariale: "+moyenneSalariale();
+		try{
+			return getNomDepartement()+": "+getNbrEmploye()+" Employes \n Masse Salariale: "+masseSalariale()+"\n Moyenne Salariale: "+moyenneSalariale();
+		}catch(Exception e){
+			throw new ArithmeticException(e.toString());
+		}
 	}
 	
 	//Autres Methodes
@@ -70,8 +74,12 @@ public class Departement {
 		
 		return masse;	
 	}//Calcul de la moyenne salariale 
-	public double moyenneSalariale(){
-		return masseSalariale()/getNbrEmploye();
+	public double moyenneSalariale() throws Exception{
+		try{
+			return masseSalariale()/getNbrEmploye();
+		}catch(Exception e){
+			throw new ArithmeticException("Il n'y a pas d'employés!!");
+		}
 	}
 	//Methode permettant d'ajouter un employe au bout de tabEmploye
 	public void addEmploye(String nom,String prenom,String date,double salaireEmploye,int heures){
