@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
  * 5 - Quitter : permet de terminer l’application
  *
  *
- * @author Raphael Duchaine 24/01/2016
- * @author2 Patrick Domingues 05/03/2016
+ * @author Raphael Duchaine 10/04/2016
+ * @author2 Patrick Domingues 09/04/2016
  */
 public class GestionEmploye {
 
@@ -50,17 +50,22 @@ public class GestionEmploye {
 							break;
 
                                                 //création de l'objet Employe dans une nouvelle case du tableau tabEmploye
-						dep1.setTabEmploye(dep1.getNbrEmploye(),new Employe(JOptionPane.showInputDialog(null,"Nom de famille de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE),
-						JOptionPane.showInputDialog(null,"Prénom de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE ),
-						JOptionPane.showInputDialog(null,"Date de naissance de l'employé?(en format JJMMAAAA): ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE),
-						Integer.parseInt(JOptionPane.showInputDialog(null,"nombre d'heures travaillées de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE)),
-								Double.parseDouble(JOptionPane.showInputDialog(null,"taux horaire de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE))));
+						try{
+							dep1.setTabEmploye(dep1.getNbrEmploye(),new Employe(JOptionPane.showInputDialog(null,"Nom de famille de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE),
+									JOptionPane.showInputDialog(null,"Prénom de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE ),
+									JOptionPane.showInputDialog(null,"Date de naissance de l'employé?(en format JJMMAAAA): ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE),
+									Integer.parseInt(JOptionPane.showInputDialog(null,"nombre d'heures travaillées de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE)),
+									Double.parseDouble(JOptionPane.showInputDialog(null,"taux horaire de l'employé?: ","Enregistrer employé",JOptionPane.QUESTION_MESSAGE))));
+							
+							//NOTE: La date de naissance de l'employe dois avoir la forme requise, sinon sa marche pas (à cause du substring dans Employe)
+						 	JOptionPane.showMessageDialog(null,"compte enregistré: " + dep1.getTabEmploye(dep1.getNbrEmploye()).codeAcces(),"Enregistrer un employé", JOptionPane.INFORMATION_MESSAGE);
 
-						//NOTE: La date de naissance de l'employe dois avoir la forme requise, sinon sa marche pas (à cause du substring dans Employe)
-					 	JOptionPane.showMessageDialog(null,"compte enregistré: " + dep1.getTabEmploye(dep1.getNbrEmploye()).codeAcces(),"Enregistrer un employé", JOptionPane.INFORMATION_MESSAGE);
-
-                                                //prend en compte le nombre d'employe (à remplacer)
-                                                dep1.setNbrEmploye(dep1.getNbrEmploye() + 1);
+                            //prend en compte le nombre d'employe (à remplacer)
+                            dep1.setNbrEmploye(dep1.getNbrEmploye() + 1);
+						}catch(Exception e){
+							JOptionPane.showMessageDialog(null, e.toString(), "ERREUR", JOptionPane.ERROR_MESSAGE);
+						}
+						
 
 						break;
 
@@ -126,7 +131,7 @@ public class GestionEmploye {
 						}
 
 				default:
-					JOptionPane.showMessageDialog(null, "Hey, le Nouveau! \nFais attention, tu mets ce département en danger!");
+					JOptionPane.showMessageDialog(null, "Hey, le Nouveau! \nFais attention, tu mets le département en danger!");
 				}//fin switch
 
 			}while(option!=5);
