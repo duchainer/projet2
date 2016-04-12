@@ -106,7 +106,12 @@ public class GestionEmploye {
 
 				case 4: //AFFICHE TOUTES LES INFORMATIONS SUR DEPARTEMENT
 					//Utilisation du toString() de Departement
-					JOptionPane.showMessageDialog(null, dep1.toString(), "Statistiques", JOptionPane.INFORMATION_MESSAGE);
+					
+					try{
+						JOptionPane.showMessageDialog(null, dep1.toString(), "Statistiques", JOptionPane.INFORMATION_MESSAGE);
+					}catch(Exception e){
+						JOptionPane.showMessageDialog(null, e.toString(), "ERREUR", JOptionPane.ERROR_MESSAGE);
+					}
 					 break;
 
 
