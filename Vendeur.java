@@ -11,25 +11,29 @@ public class Vendeur extends Employe implements Finance{
     public int getMontantVentes() {
         return montantVentes;
     }
-    public void setMontantVentes(int unMontantVentes) {
-        this.montantVentes = unMontantVentes;
+    public void setMontantVentes(int montantVentes) throws Exception {
+        if (0<=montantVentes||montantVentes<=10000)
+            this.montantVentes = montantVentes;
+        else throw new Exception("Montant de ventes invalide (n'est pas entre 0 et 10000)");        
     }
     public double getTauxCommission() {
         return tauxCommission;
     }
-    public void setTauxCommission(double unTauxCommission) {
-        this.tauxCommission = unTauxCommission;
+    public void setTauxCommission(double tauxCommission) throws Exception {
+        if (0<=tauxCommission||tauxCommission<=100)
+            this.tauxCommission = tauxCommission;
+        else throw new Exception("Taux de commission invalide (n'est pas entre 0 et 100)");   
     }
     
     //constructeur sans paramètres
-    public Vendeur(){
+    public Vendeur() throws Exception{
         super();
         setMontantVentes(0);
         setTauxCommission(0);
         }
     
     //constructeur avec paramètres
-    public Vendeur(String unNom, String unPrenom, String uneDate, int desHeures, double unTauxHoraire, int unMontantVentes, double unTauxCommission){
+    public Vendeur(String unNom, String unPrenom, String uneDate, int desHeures, double unTauxHoraire, int unMontantVentes, double unTauxCommission) throws Exception{
         super(unNom, unPrenom, uneDate, desHeures, unTauxHoraire);
         setMontantVentes(unMontantVentes);
         setTauxCommission(unTauxCommission);

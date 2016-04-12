@@ -26,22 +26,37 @@ public class Employe implements Finance {
     public String getNom() {
         return nom;
     }
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNom(String nom) throws Exception {
+        if (nom.equals(""))
+            throw new Exception("Aucun nom n'a été enregistré");
+        else this.nom = nom;       
     }
     
     public String getPrenom() {
         return prenom;
     }
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
+    public void setPrenom(String prenom) throws Exception {
+        if (prenom.equals(""))
+            throw new Exception("Aucun prénom n'a été enregistré");
+        else this.prenom = prenom;   
     }
     
     public String getDate() {
         return date;
     }
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate(String date) throws Exception {
+        //Vérifie si la chaine date contient 8 caractères
+        if(date.length()==8){
+            for (int i=0; i<date.length(); i++){ 
+                //Si le charactère est un chiffre, alors on ignore, sinon on lance une exception
+                if(Character.isDigit(date.charAt(i))){                    
+                }
+                else throw new Exception("La date ne doit être composé que de chiffres");
+            }            
+            this.date = date;
+            
+        }
+        else throw new Exception("Le format JJMMAAAA n'a pas été respecté");
     }
     
     public String getMotDePasse() {
@@ -54,19 +69,23 @@ public class Employe implements Finance {
     public int getHeures() {
         return heures;
     }
-    public void setHeures(int heures) {
-        this.heures = heures;
+    public void setHeures(int heures) throws Exception {
+        if (0<=heures||heures<=60)
+            this.heures = heures;
+        else throw new Exception("nombre d'heures invalide (n'est pas entre 0h et 60h)");        
     }
     
     public double getTauxHoraire() {
         return tauxHoraire;
     }
-    public void setTauxHoraire(double tauxHoraire) {
-        this.tauxHoraire = tauxHoraire;
+    public void setTauxHoraire(double tauxHoraire) throws Exception {
+        if (0<=tauxHoraire||tauxHoraire<=100)
+            this.tauxHoraire = tauxHoraire;
+        else throw new Exception("Taux horaire invalide (n'est pas entre 0$ et 100$");
     }
     
     //Constructeur : initialise le nom  "invité", et les autres paramètres a  défaut
-    public Employe(){
+    public Employe() throws Exception{
         setNom("invité");
         setPrenom("");
         setDate("");
@@ -74,7 +93,7 @@ public class Employe implements Finance {
     }
     
     //Constructeur avec paramètres: initialise le mot de passe par "crosemont", et les autres paramètres sont choisis par saisie
-    public Employe(String unNom, String unPrenom, String uneDate, int desHeures, double unTauxHoraire){
+    public Employe(String unNom, String unPrenom, String uneDate, int desHeures, double unTauxHoraire) throws Exception {
         setNom(unNom);
         setPrenom(unPrenom);
         setDate(uneDate);
@@ -136,12 +155,29 @@ public class Employe implements Finance {
         
     //main (sert uniquement a tester)
     public static void main(String[] args){
+        try{
         Employe employe = new Employe(JOptionPane.showInputDialog(null,"Veuillez entrer votre nom: "),
         JOptionPane.showInputDialog(null,"Veuillez entrer votre prenom: "),
         JOptionPane.showInputDialog(null,"Veuillez entrer votre date de naissance (en format JJMMAAAA): "),
         Integer.parseInt(JOptionPane.showInputDialog(null,"Veuillez entrer votre nombre d'heures travaillées: ")),
         Double.parseDouble(JOptionPane.showInputDialog(null,"Veuillez entrer votre salaire horaire: ")));
+        
+        Vendeur vendeur = new Vendeur(JOptionPane.showInputDialog(null,"Veuillez entrer votre nom: "),
+        JOptionPane.showInputDialog(null,"Veuillez entrer votre prenom: "),
+        JOptionPane.showInputDialog(null,"Veuillez entrer votre date de naissance (en format JJMMAAAA): "),
+        Integer.parseInt(JOptionPane.showInputDialog(null,"Veuillez entrer votre nombre d'heures travaillées: ")),
+        Double.parseDouble(JOptionPane.showInputDialog(null,"Veuillez entrer votre salaire horaire: ")),
+        Integer.parseInt(JOptionPane.showInputDialog(null,"Veuillez entrer votre montant de ventes: ")),
+        Double.parseDouble(JOptionPane.showInputDialog(null,"Veuillez entrer votre taux de commission: ")) );
+        
         JOptionPane.showMessageDialog(null, employe.codeAcces());
-        JOptionPane.showMessageDialog(null, employe.toString());
+        JOptionPane.showMessageDialog(null, "toString de l'employe: " + employe.toString());
+        
+        JOptionPane.showMessageDialog(null, vendeur.codeAcces());
+        JOptionPane.showMessageDialog(null, "toString du vendeur: " + vendeur.toString());
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 }
