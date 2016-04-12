@@ -103,7 +103,7 @@ public class Employe implements Finance {
     }
 
     //Constructeur : initialise le nom  "invité", et les autres paramètres a  défaut
-    public Employe() {
+    public Employe() throws Exception {
         setNom("invité");
         setPrenom("prenom");
         setDate("00000000");
