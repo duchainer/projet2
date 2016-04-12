@@ -103,11 +103,11 @@ public class Employe implements Finance {
     }
 
     //Constructeur : initialise le nom  "invité", et les autres paramètres a  défaut
-    public Employe() throws Exception {
+    public Employe() {
         setNom("invité");
-        setPrenom("");
-        setDate("");
-        setMotDePasse("");
+        setPrenom("prenom");
+        setDate("00000000");
+        initMotPasse();
     }
 
     //Constructeur avec paramètres: initialise le mot de passe par "crosemont", et les autres paramètres sont choisis par saisie
