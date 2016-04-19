@@ -1,4 +1,4 @@
-import javax.swing.*;
+//import javax.swing.*;
 
 /**
  * 1- Les attributs (choisir les types appropriés): -nom - prenom - date de
@@ -171,7 +171,7 @@ public class Employe implements Finance {
     }
 
     //main (sert uniquement a tester)
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         try {
             Employe employe = new Employe(JOptionPane.showInputDialog(null, "Veuillez entrer votre nom: "),
                     JOptionPane.showInputDialog(null, "Veuillez entrer votre prenom: "),
@@ -195,5 +195,5 @@ public class Employe implements Finance {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-    }
+    }*/
 }
