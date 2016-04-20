@@ -1,0 +1,126 @@
+package TD;
+
+import java.util.*;
+
+import javax.swing.*;
+
+/**
+ * This program demonstrates the ArrayList class.
+ * @author Cay Horstmann
+ */
+public class GestionEmployeTD{
+	private static int option;
+	public static void main(String[] args){
+		// fill the staff array list with three Employee objects
+		ArrayList<Employee> staff = new ArrayList<Employee>();
+		staff.add(new Employee("Carl Cracker", 75000, 1987, 12, 15));
+		staff.add(new Employee("Harry Hacker", 50000, 1989, 10, 1));
+		staff.add(new Employee("Tony Tester", 40000, 1990, 3, 15));
+		do {
+			//affichage du menu et saisie de l'option
+			option = Integer.parseInt(JOptionPane.showInputDialog(null,
+					"Choisir:\n 1: Enregistrer employé\n 2: Licensier employé\n 3: Lister employés\n 4: Quitter",
+					"Gestion des ressources Humaines\n AKA ton poste de travail", JOptionPane.QUESTION_MESSAGE));
+			// les différentes options du menu
+			switch (option) {
+			case 1: // Demande la saisie de tous les attributs d'un employe 
+				//création de l'objet Employe dans une nouvelle case du tableau staff
+				try {
+					String nom = JOptionPane.showInputDialog(null, "Nom de l'employé?: ", "Enregistrer employé", JOptionPane.QUESTION_MESSAGE);
+					int annee =Integer.parseInt(JOptionPane.showInputDialog(null, "Année de l'embauche de l'employé?: ", "Enregistrer employé", JOptionPane.QUESTION_MESSAGE));
+					int mois =Integer.parseInt(JOptionPane.showInputDialog(null, "Mois de l'embauche de l'employé?: ", "Enregistrer employé", JOptionPane.QUESTION_MESSAGE));
+					int jour =Integer.parseInt(JOptionPane.showInputDialog(null, "Jour de l'embauche de l'employé?(ex: 21): ", "Enregistrer employé", JOptionPane.QUESTION_MESSAGE));
+					double salaire = Double.parseDouble(JOptionPane.showInputDialog(null, "Salaire de l'employé?: ", "Enregistrer employé", JOptionPane.QUESTION_MESSAGE));
+					staff.add(new Employee(nom,salaire,annee,mois,jour));
+					
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "ERREUR", JOptionPane.ERROR_MESSAGE);
+				}
+				break;
+			case 2:	//Licensie un employé selon son nom
+				String nom = JOptionPane.showInputDialog(null, "Nom de l'employé à licensier?: ", "Licensier employé", JOptionPane.QUESTION_MESSAGE);
+				Employee employeCherche=null;
+				for(Employee e :staff){
+					if(e.getName().equals(nom)){
+						employeCherche = e;
+						break;
+					}
+				}
+				if(staff.remove(employeCherche)){
+					JOptionPane.showMessageDialog(null, "Employé : "+employeCherche.getName()+" a été correctement licensié.");
+				}else{
+					JOptionPane.showMessageDialog(null, "Employé : "+nom+" est introuvable...");
+				}
+				
+				break;
+			case 3:	//Lister employés : permet d’afficher la liste de tous les employés du département contenus (Utilisation du toString() des Employe)
+				for (Employee e : staff)
+					JOptionPane.showMessageDialog(null,e.toString());
+				break;
+			case 4://QUITTER
+				//Option avec oui/non pour quitter le programme
+				int reponse = JOptionPane.showConfirmDialog(null, "Le metier de gestionnaire te fait peur?",
+						"Se Sauver de ses responsabilités", JOptionPane.YES_NO_OPTION);
+				if (reponse == JOptionPane.YES_OPTION) {
+					break;
+				} else {
+					option = 0;
+					break;
+				}
+			default:
+				JOptionPane.showMessageDialog(null, "Hey, le Nouveau! \nFais attention, tu mets le département en danger!");
+			}//fin switch
+		} while (option != 4);
+		
+
+
+
+		// raise everyone's salary by 5%
+		for (Employee e : staff)
+			e.raiseSalary(5);
+
+		// print out information about all Employee objects
+
+	}
+	public static double masseSalariale(ArrayList<Employee> staff) {
+		double masse =0;
+		for (Employee e : staff)
+			masse+=e.getSalary();
+		return masse;
+	}
+}
+
+class Employee{
+
+	private String name;
+	private double salary;
+	private Date hireDay;
+
+	public Employee(String n, double s, int year, int month, int day){
+		name = n;
+		salary = s;
+		GregorianCalendar calendar = new GregorianCalendar(year, month - 1, day);
+		hireDay = calendar.getTime();
+	}
+
+	public String getName(){
+		return name;
+	}
+
+	public double getSalary(){
+		return salary;
+	}
+
+	public Date getHireDay(){
+		return hireDay;
+	}
+	public String toString() {
+		return (getName()+",salary="+getSalary()+",hireDay="+getHireDay());
+	}
+
+
+	public void raiseSalary(double byPercent){
+		double raise = salary * byPercent / 100;
+		salary += raise;
+	}
+}
