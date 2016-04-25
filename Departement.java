@@ -3,7 +3,7 @@
  *
  * 1 - Les attributs (choisir les types appropries): - nom departement - nombre
  * d'employes - tableau d'employes (20 au max) Definir un main() et faire des
- * tests au fur et à mesure, dans lequel vous creerez un objet de cette classe
+ * tests au fur et a� mesure, dans lequel vous creerez un objet de cette classe
  * et affichez ses informations, avec les donnees de votre choix. 2 - Les
  * methodes - masseSalariale() : retourne le total des salaires bruts de tous
  * les employes figurant dans le tableau d'employes - moyenne Salariale() :
@@ -85,7 +85,7 @@ public class Departement {
         try {
             return masseSalariale() / getNbrEmploye();
         } catch (Exception e) {
-            throw new ArithmeticException("Il n'y a pas d'employés!!");
+            throw new ArithmeticException("Il n'y a pas d'employes!!");
         }
     }
 
