@@ -1,17 +1,17 @@
 //import javax.swing.*;
 
 /**
- * 1- Les attributs (choisir les types appropriés): -nom - prenom - date de
+ * 1- Les attributs (choisir les types appropries): -nom - prenom - date de
  * naissance (chaine de longueur fixe, format : JJMMAAAA) - mot de passe -
- * nombre d'heures travaillées - taux horaire 2 - Dans la même classe, définir
- * les méthodes suivantes : - codeAcces() : qui retourne le code d'accès de
- * l'employé en le construisant comme suit : 1ère lettre du prénom suivi par le
- * nom complet suivi par les 2 derniers chiffres de l'année de naissance, le
- * tout sans espace. - initMotPasse() qui réinitialise le mot de passe de
- * l'employé en lui attribuant la chaine crosemont - salaireBrut() qui calcule
- * et retourne le salaire brut de l'employé selon le nombre d'heures travaillées
- * et le taux horaire de l'employé - salaireNet(taux) qui retourne le salaire
- * après déduction des taxes, selon le taux fourni en paramètre (en
+ * nombre d'heures travaillees - taux horaire 2 - Dans la meme classe, definir
+ * les methodes suivantes : - codeAcces() : qui retourne le code d'acces de
+ * l'employe en le construisant comme suit : 1ere lettre du prenom suivi par le
+ * nom complet suivi par les 2 derniers chiffres de l'annee de naissance, le
+ * tout sans espace. - initMotPasse() qui reinitialise le mot de passe de
+ * l'employe en lui attribuant la chaine crosemont - salaireBrut() qui calcule
+ * et retourne le salaire brut de l'employe selon le nombre d'heures travaillees
+ * et le taux horaire de l'employe - salaireNet(taux) qui retourne le salaire
+ * apres deduction des taxes, selon le taux fourni en parametre (en
  * pourcentage).
  * 
  *@author Patrick Domingues 10/04/2016
@@ -31,7 +31,7 @@ public class Employe implements Finance {
 
     public void setNom(String nom) throws Exception {
         if (nom.equals("")) {
-            throw new Exception("Aucun nom n'a été enregistré");
+            throw new Exception("Aucun nom n'a ete enregistre");
         } else {
             this.nom = nom;
         }
@@ -43,7 +43,7 @@ public class Employe implements Finance {
 
     public void setPrenom(String prenom) throws Exception {
         if (prenom.equals("")) {
-            throw new Exception("Aucun prénom n'a été enregistré");
+            throw new Exception("Aucun prenom n'a ete enregistre");
         } else {
             this.prenom = prenom;
         }
@@ -54,18 +54,18 @@ public class Employe implements Finance {
     }
 
     public void setDate(String date) throws Exception {
-        //Vérifie si la chaine date contient 8 caractères
+        //Verifie si la chaine date contient 8 caracteres
         if (date.length() == 8) {
             for (int i = 0; i < date.length(); i++) {
-                //Si le charactère est un chiffre, alors on ignore, sinon on lance une exception
+                //Si le charactere est un chiffre, alors on ignore, sinon on lance une exception
                 if (!Character.isDigit(date.charAt(i))) {
-                    throw new Exception("La date ne doit être composé que de chiffres");
+                    throw new Exception("La date ne doit etre compose que de chiffres");
                 }
             }
             this.date = date;
 
         } else {
-            throw new Exception("Le format JJMMAAAA n'a pas été respecté");
+            throw new Exception("Le format JJMMAAAA n'a pas ete respecte");
         }
     }
 
@@ -101,15 +101,15 @@ public class Employe implements Finance {
         }
     }
 
-    //Constructeur : initialise le nom  "invité", et les autres paramètres a  défaut
+    //Constructeur : initialise le nom  "invite", et les autres parametres a  defaut
     public Employe() throws Exception{
-        setNom("invité");
+        setNom("invite");
         setPrenom("prenom");
         setDate("00000000");
         initMotPasse();
     }
 
-    //Constructeur avec paramètres: initialise le mot de passe par "crosemont", et les autres paramètres sont choisis par saisie
+    //Constructeur avec parametres: initialise le mot de passe par "crosemont", et les autres parametres sont choisis par saisie
     public Employe(String unNom, String unPrenom, String uneDate, int desHeures, double unTauxHoraire) throws Exception {
         setNom(unNom);
         setPrenom(unPrenom);
@@ -119,14 +119,14 @@ public class Employe implements Finance {
         setTauxHoraire(unTauxHoraire);
     }
 
-    //accès aux informations
+    //acces aux informations
     public String afficher() {
-        return "\nCode d'accès: "+ codeAcces()
+        return "\nCode d'acces: "+ codeAcces()
                 + "\nNom: " + getNom()
-                + "\nPrénom: " + getPrenom()
+                + "\nPrenom: " + getPrenom()
                 + "\nDate de naissance(JJMMAAAA): " + getDate()
                 + "\nMot de passe: " + getMotDePasse()
-                + "\nHeures travaillées: " + getHeures()
+                + "\nHeures travaillees: " + getHeures()
                 + "\nTaux horaire: "+ getTauxHoraire() + "$/heures"
                 + "\nSalaire brut: "+ salaireBrut();
     }
@@ -136,38 +136,38 @@ public class Employe implements Finance {
         return "         "+codeAcces() + ", " + getNom() + ", " + getPrenom() + ", " + salaireBrut();
     }
 
-    //Autres méthodes
-    //Retourne le code d' accès de l'employé
+    //Autres methodes
+    //Retourne le code d' acces de l'employe
     public String codeAcces() {
         String code = getPrenom().charAt(0) + getNom() + getDate().substring(getDate().length() - 2, getDate().length());
         return code;
     }
 
-    //Réinitialise le mot de passe de l'employé
+    //Reinitialise le mot de passe de l'employe
     public void initMotPasse() {
         setMotDePasse("crosemont");
     }
 
-    //Calcule et retourne le salaire brut de l'employé
+    //Calcule et retourne le salaire brut de l'employe
     public double salaireBrut() {
         return getTauxHoraire() * getHeures();
     }
 
-    //Retourne le salaire après déduction des taxes (taxes en pourcentage)
+    //Retourne le salaire apres deduction des taxes (taxes en pourcentage)
     public double salaireNet(double taux) {
         return salaireBrut() * (1 - taux);
     }
 
-    //Surdéfinition de la méthode augmenter() de l'interface Finance
+    //Surdefinition de la methode augmenter() de l'interface Finance
     @Override
-    public double augmenter() {
-        return getTauxHoraire() + TAUX_AUGMENTATION;
+    public void augmenter() throws Exception {
+        setTauxHoraire((getTauxHoraire()* (1+TAUX_AUGMENTATION)));
     }
 
-    //Surdéfinition de la méthode reduire() de l'interface Finance
+    //Surdefinition de la methode reduire() de l'interface Finance
     @Override
-    public double reduire() {
-        return getTauxHoraire() - TAUX_DEDUCTION;
+    public void reduire() throws Exception {
+    	setTauxHoraire((getTauxHoraire()* (1-TAUX_DEDUCTION)));
     }
 
     //main (sert uniquement a tester)
@@ -176,13 +176,13 @@ public class Employe implements Finance {
             Employe employe = new Employe(JOptionPane.showInputDialog(null, "Veuillez entrer votre nom: "),
                     JOptionPane.showInputDialog(null, "Veuillez entrer votre prenom: "),
                     JOptionPane.showInputDialog(null, "Veuillez entrer votre date de naissance (en format JJMMAAAA): "),
-                    Integer.parseInt(JOptionPane.showInputDialog(null, "Veuillez entrer votre nombre d'heures travaillées: ")),
+                    Integer.parseInt(JOptionPane.showInputDialog(null, "Veuillez entrer votre nombre d'heures travaillees: ")),
                     Double.parseDouble(JOptionPane.showInputDialog(null, "Veuillez entrer votre salaire horaire: ")));
 
             Vendeur vendeur = new Vendeur(JOptionPane.showInputDialog(null, "Veuillez entrer votre nom: "),
                     JOptionPane.showInputDialog(null, "Veuillez entrer votre prenom: "),
                     JOptionPane.showInputDialog(null, "Veuillez entrer votre date de naissance (en format JJMMAAAA): "),
-                    Integer.parseInt(JOptionPane.showInputDialog(null, "Veuillez entrer votre nombre d'heures travaillées: ")),
+                    Integer.parseInt(JOptionPane.showInputDialog(null, "Veuillez entrer votre nombre d'heures travaillees: ")),
                     Double.parseDouble(JOptionPane.showInputDialog(null, "Veuillez entrer votre salaire horaire: ")),
                     Integer.parseInt(JOptionPane.showInputDialog(null, "Veuillez entrer votre montant de ventes: ")),
                     Double.parseDouble(JOptionPane.showInputDialog(null, "Veuillez entrer votre taux de commission: ")));
