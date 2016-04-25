@@ -5,7 +5,7 @@
  */
 public class Vendeur extends Employe implements Finance {
 
-    //2 attributs supplémentaires
+    //2 attributs supplementaires
     private int montantVentes;
     private double tauxCommission;
 
@@ -15,7 +15,7 @@ public class Vendeur extends Employe implements Finance {
     }
 
     public void setMontantVentes(int montantVentes) throws Exception {
-        if (0 <= montantVentes || montantVentes <= 10000) {
+        if (0 <= montantVentes && montantVentes <= 10000) {
             this.montantVentes = montantVentes;
         } else {
             throw new Exception("Montant de ventes invalide (n'est pas entre 0 et 10000)");
@@ -27,37 +27,37 @@ public class Vendeur extends Employe implements Finance {
     }
 
     public void setTauxCommission(double tauxCommission) throws Exception {
-        if (0 <= tauxCommission || tauxCommission <= 100) {
+        if (0 <= tauxCommission && tauxCommission <= 100) {
             this.tauxCommission = tauxCommission;
         } else {
             throw new Exception("Taux de commission invalide (n'est pas entre 0 et 100)");
         }
     }
 
-    //constructeur sans paramètres
+    //constructeur sans parametres
     public Vendeur() throws Exception {
         super();
         setMontantVentes(0);
         setTauxCommission(0);
     }
 
-    //constructeur avec paramètres
+    //constructeur avec parametres
     public Vendeur(String unNom, String unPrenom, String uneDate, int desHeures, double unTauxHoraire, int unMontantVentes, double unTauxCommission) throws Exception {
         super(unNom, unPrenom, uneDate, desHeures, unTauxHoraire);
         setMontantVentes(unMontantVentes);
         setTauxCommission(unTauxCommission);
     }
     
-    //accès aux informations
+    //acces aux informations
     @Override
     public String afficher() {
         return "\t\tVENDEUR"
-                + "\nCode d'accès: "+ codeAcces()
+                + "\nCode d'acces: "+ codeAcces()
                 + "\nNom: " + getNom()
-                + "\nPrénom: " + getPrenom()
+                + "\nPrenom: " + getPrenom()
                 + "\nDate de naissance(JJMMAAAA): " + getDate()
                 + "\nMot de passe: " + getMotDePasse()
-                + "\nHeures travaillées: " + getHeures()
+                + "\nHeures travaillees: " + getHeures()
                 + "\nTaux horaire: "+ getTauxHoraire() + "$/heures"
                 + "\nSalaire brut: "+ salaireBrut()
                 + "\nMontant des ventes: "+ montantVentes
@@ -69,40 +69,40 @@ public class Vendeur extends Employe implements Finance {
         return "VENDEUR: "+codeAcces() + ", " + getNom() + ", " + getPrenom() + ", " + salaireBrut();
     }
 
-    //Surdéfinition de la méthode initMotPasse()
+    //Surdefinition de la methode initMotPasse()
     @Override
     public void initMotPasse() {
         super.setMotDePasse("vendeur");
     }
 
-    //Surdéfinition de la méthode salaireBrut(){
+    //Surdefinition de la methode salaireBrut(){
     @Override
     public double salaireBrut() {
         return super.salaireBrut() + getMontantVentes() * getTauxCommission();
     }
 
-    //Surdéfinition de la méthode augmenter() de l'interface Finance
+    //Surdefinition de la methode augmenter() de l'interface Finance
     @Override
-    public double augmenter() {
-        return getTauxCommission() + TAUX_AUGMENTATION;
+    public void augmenter() throws Exception{
+    	setTauxCommission(getTauxCommission()*(1+TAUX_DEDUCTION));
     }
 
-    //Surdéfinition de la méthode reduire() de l'interface Finance
+    //Surdefinition de la methode reduire() de l'interface Finance
     @Override
-    public double reduire() {
-        return getTauxCommission() - TAUX_DEDUCTION;
+    public void reduire() throws Exception {
+       setTauxCommission(getTauxCommission()*(1-TAUX_DEDUCTION));
     }
 
 }
 
-//Interface Finance contenant des variables finales et des méthodes abstraites
+//Interface Finance contenant des variables finales et des methodes abstraites
 interface Finance {
 
     final double TAUX_DEDUCTION = 0.15;
     final double TAUX_AUGMENTATION = 0.10;
 
-    public double augmenter();
+    public void augmenter()throws Exception;
 
-    public double reduire();
+    public void reduire()throws Exception;
 
 }
