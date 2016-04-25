@@ -90,10 +90,14 @@ public class Departement {
     }
 
     //Methode permettant d'ajouter un employe au bout de tabEmploye
-    public void addEmploye(String nom, String prenom, String date, double salaireEmploye, int heures) throws Exception {
+    public void addEmploye(String nom, String prenom, String date, int heures,double salaireEmploye) throws Exception {
         setTabEmploye(getNbrEmploye(), new Employe(nom, prenom, date, heures, salaireEmploye));
         setNbrEmploye(getNbrEmploye() + 1);
     }
+    public void addVendeur(String nom, String prenom, String date, int heures,double salaireEmploye, int montantVente,double tauxCommission) throws Exception {
+    	setTabEmploye(getNbrEmploye(), new Vendeur(nom, prenom, date, heures, salaireEmploye,montantVente,tauxCommission));
+    	setNbrEmploye(getNbrEmploye() + 1);
+	}
     //Main pour tester la classe
 	/*public static void main(String[] args) {
      Departement dep1= new Departement("Programmation");
@@ -102,5 +106,7 @@ public class Departement {
      System.out.println("Masse salarial:"+dep1.moyenneSalariale());
      System.out.println("Moyenne salarial:"+dep1.moyenneSalariale());
      }*/
+
+	
 
 }
