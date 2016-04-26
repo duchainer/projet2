@@ -102,17 +102,16 @@ public class Departement {
     }
     public String listeTriee() throws Exception {
         String liste="";
-        
-        
-        return "";
+
+//À COMPLÉTER
+        return liste;
     }
     
+//Méthode qui retourne un employé du département ayant le code spécifié en paramètre, ou null s’il n’existe pas dans le département
     public Employe rechercher(String code){
-        for ( elem : ){
-            
-        }
-        return ; 
+        return tabEmploye.get(tabEmploye.indexOf(code));  
     }
+    
     
     /*public void addEmploye(String nom, String prenom, String date, double salaireEmploye, int heures) throws Exception {
         setTabEmploye(getNbrEmploye(), new Employe(nom, prenom, date, heures, salaireEmploye));
