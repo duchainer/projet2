@@ -1,8 +1,5 @@
 import javax.swing.*;
-
-import java.awt.GridLayout;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 /**
  * 
@@ -15,103 +12,46 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 
 	//Attributs
 	private JPanel simplePanel;
-	private ButtonGroup group;
-	private JRadioButton radio1,radio2;
-	ArrayList<JButton> boutons = new ArrayList<JButton>();
+	private JButton bouton1,bouton2,bouton3,bouton4,bouton5;
 	private JTextField textField;
 	private JLabel label;
 
 	//Constructeurs
 	public PrincipaleFrame () {
-		setTitle ("Gestion Employes");           		// Titre
+		setTitle ("Gestion EmployÃ©s");           		// Titre
 		setSize (300,600); 								// Dimensions 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fermeture par x
 		setLocationRelativeTo(null);					// Fenetre centree
 		
 		simplePanel = new  JPanel ();
-		//Intégre un gestionnaire de présentation GridLayout 
-		// à 5 lignes et 2 colonnes et l'appliquer à l'objet panel
-		GridLayout gl = new GridLayout(5,2,30,30);
-		
-		label = new  JLabel ("Nom Employe");
-		simplePanel.add(label);                         //Ajoute etiquette au panneau 
+		label = new  JLabel ("Code  usager");
+		simplePanel.add(label);                         //Ajoute Ã©tiquette au panneau 
 		
 		textField = new  JTextField (10);
 		simplePanel.add( textField );                   //Ajoute champ texte au panneau
 		
-		radio1 = new JRadioButton("Employe", true);
-		group.add(radio1);
-		radio2 = new JRadioButton("Vendeur", true);
-		group.add(radio2);
+		bouton1 = new JButton("Enregistrement");
+		simplePanel.add( bouton1); 						//Ajoute bouton au panneau
+		bouton2 = new JButton("Affichage");
+		simplePanel.add( bouton2); 						//Ajoute bouton au panneau
+		bouton3 = new JButton("Liste");
+		simplePanel.add( bouton3); 						//Ajoute bouton au panneau
+		bouton4 = new JButton("Statistiques");
+		simplePanel.add( bouton4); 						//Ajoute bouton au panneau
+		bouton5 = new JButton("Quitter");
+		simplePanel.add( bouton5); 						//Ajoute bouton au panneau
+
 		
-		addBouton("Enregistrement");
-		addBouton("Affichage");
-		addBouton("Liste");
-		addBouton("Statistiques");
-		addBouton("Quitter");
+		add( simplePanel );                             //  ajoute panneau Ã  la  fenÃªtre
 
-
-		
-		add( simplePanel );                             //  ajoute panneau a  la  fenetre
-
-	}
-
-
-	public void addBouton(String texte) {
-		boutons.add( new JButton(texte));
-		simplePanel.add(boutons.get(boutons.size()-1)); 						//Ajoute bouton au panneau
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent event) {
-		if (event.getSource()==boutons.get(0)){ 
-			if(radio2.isSelected()){
-				creeVendeur();
-			}
-			else{
-				creeEmploye();
-			}
-		}
-			
-		if (event.getSource()==boutons.get(1))
-			affichage();
-		if (event.getSource()==boutons.get(2))
-			liste();
-		if (event.getSource()==boutons.get(3))
-			statistique();
-		if (event.getSource()==boutons.get(4))
-			quitter();
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
-		//Autres methodes
-		private void creeEmploye() {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		private void creeVendeur() {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		private void affichage() {
-			
-		}
-		
-		private void liste() {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		private void statistique() {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		private void quitter() {
-			// TODO Auto-generated method stub
-			
-		}
+	//Autres mÃ©thodes
 }
-
 
