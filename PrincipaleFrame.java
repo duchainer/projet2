@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 /**
  * 
- * 
  * @author Raphael Duchaine 19/04/2016
  */
 public class PrincipaleFrame extends JFrame implements ActionListener {
@@ -28,11 +27,12 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);					// Fenetre centree
 
 		simplePanel = new  JPanel ();
-		//Intégre un gestionnaire de présentation GridLayout 
-		// à 5 lignes et 4 colonnes et l'appliquer à l'objet simplePanel
+		//Integre un gestionnaire de presentation GridLayout 
+		// a 5 lignes et 4 colonnes et l'appliquer a l'objet simplePanel
 		GridLayout gl = new GridLayout(0,4,10,10);
 		simplePanel.setLayout(gl);
 
+		//Ajout des Labels et champ de texte par une methode
 		addChampDeTexte("Nom Employe",10);
 		addChampDeTexte("Prenom Employe",10);
 		addChampDeTexte("Date D'Embauche",10);
@@ -43,7 +43,7 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 		radio1 = new JRadioButton("Employe", true);
 		simplePanel.add(radio1);
 		group.add(radio1);
-		radio2 = new JRadioButton("Vendeur", true);
+		radio2 = new JRadioButton("Vendeur", false);
 		simplePanel.add(radio2);
 		group.add(radio2);
 
@@ -59,23 +59,23 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 
 
 
-		add( simplePanel );                             //  ajoute panneau a  la  fenetre
+		add( simplePanel );                             //  ajoute panneau a la  fenetre
 
 	}
 
-
+	//Ajoute un element vide au panneau
 	public void addEspace() {
 		simplePanel.add(new JLabel());
 	}
 
-
+	//Ajout des Labels et champ de texte par une methode tout en permettant d'avoir acces aux champs plus tard
 	public void addChampDeTexte(String texte, int tailleChamp) {
 		simplePanel.add(new  JLabel (texte));                         //Ajoute etiquette au panneau 
 		champs.add(new JTextField (tailleChamp));
 		simplePanel.add(champs.get(champs.size()-1));                   //Ajoute champ texte au panneau
 	}
 
-
+	//Ajout des boutons par une methode tout en permettant d'y avoir acces plus tard
 	public void addBouton(String texte) {
 		boutons.add( new JButton(texte));
 		simplePanel.add(boutons.get(boutons.size()-1)); //Ajoute bouton au panneau
@@ -86,19 +86,17 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource()==boutons.get(0)){ 
 			try {
-				creeEmploye();
 				if(radio2.isSelected()){
 					creeVendeur();
-				}
-				else{
-
+					clean();
+				}else{
 					creeEmploye();
+					clean();
 				}
 			}catch (Exception e) {
 				JOptionPane.showMessageDialog(null, e.getMessage(), "ERREUR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-
 		if (event.getSource()==boutons.get(1))
 			affichage();
 		if (event.getSource()==boutons.get(2))
@@ -107,18 +105,17 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 			statistique();
 		if (event.getSource()==boutons.get(4))
 			quitter();
-		clean();
 	}
 
 	/**
 	 * 
 	 */
 	private void clean() {
-		//Modifie le texte des champs de texte à null en utilisant la méthode setText()
+		//Modifie le texte des champs de texte a null en utilisant la methode setText()
 		for(JTextField elem:champs)
 			elem.setText("");
-		//Vide les boutons radios en utilisant la methode clearSelection()
-		group.clearSelection();
+		//Remet les boutons-radios a zero
+		radio1.setSelected(true);
 
 	}
 
@@ -142,9 +139,33 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 	}
 
 	private void affichage() {
-		//TODO	Copie de GestionEmploye
-		JOptionPane.showMessageDialog(null, "Marche!!affichage");
+		//Affiche Employe: permet d'afficher les informations d'un employe du departement dont le code d'acces sera demande au clavier
+
+		//Saisie du code a recherche
+		String codeSaisi = JOptionPane.showInputDialog(null, "Veillez entrer le Code d'acces de l'employe en question: ", "Afficher employe", JOptionPane.QUESTION_MESSAGE);
+		boolean trouve = false;
+		for (int i = 0; i < dep1.getNbrEmploye(); i++) {
+			//recherche le code identique a celui saisi
+			if (codeSaisi.equals(dep1.getTabEmploye(i).codeAcces())) {
+				//Affiche les informations de l'employe voulu dans les champs de texte
+				champs.get(0).setText(dep1.getTabEmploye(i).getNom());
+				System.out.println(champs.get(0).getText());
+				champs.get(1).setText(dep1.getTabEmploye(i).getPrenom());
+				champs.get(2).setText(dep1.getTabEmploye(i).getDate());
+				champs.get(3).setText(Double.toString(dep1.getTabEmploye(i).getHeures()));
+				champs.get(4).setText(Double.toString(dep1.getTabEmploye(i).getTauxHoraire()));
+				//on s'arrete a la premiere personne avec le code
+				trouve = true;
+				break;
+			}
+		}
+		if (!trouve) //Si le code n'a pas ete trouve
+			//Message pour signaler un code inexistant (ou errone)
+			JOptionPane.showMessageDialog(null, "Le code entre est non existant ou errone.", "Afficher employe", JOptionPane.QUESTION_MESSAGE);
+
 	}
+
+
 
 	private void liste() {
 		//Lister employes : permet d'afficher la liste de tous les employes du departement contenus (Utilisation du toString() d'Employe)
@@ -179,7 +200,7 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 	private void quitter() {
 		//Option avec oui/non pour quitter le programme
 		int reponse = JOptionPane.showConfirmDialog(null, "Le metier de gestionnaire te fait peur?",
-				"Se Sauver de ses responsabilites", JOptionPane.YES_NO_OPTION);
+				"Se Sauver?", JOptionPane.YES_NO_OPTION);
 		if (reponse == JOptionPane.YES_OPTION) {
 			System.exit(0);
 		}
