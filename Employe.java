@@ -127,13 +127,13 @@ public class Employe implements Finance {
                 + "\nDate de naissance(JJMMAAAA): " + getDate()
                 + "\nMot de passe: " + getMotDePasse()
                 + "\nHeures travaillees: " + getHeures()
-                + "\nTaux horaire: "+ getTauxHoraire() + "$/heures"
+                + " heures\nTaux horaire: "+ getTauxHoraire() + "$/heures"
                 + "\nSalaire brut: "+ salaireBrut();
     }
 
     @Override
     public String toString() {
-        return "         "+codeAcces() + ", " + getNom() + ", " + getPrenom() + ", " + salaireBrut();
+        return ""+codeAcces() + ", " + getNom() + ", " + getPrenom() + ", " + salaireBrut();
     }
 
     //Autres methodes

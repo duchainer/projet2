@@ -3,7 +3,7 @@
  *
  * 1 - Les attributs (choisir les types appropries): - nom departement - nombre
  * d'employes - tableau d'employes (20 au max) Definir un main() et faire des
- * tests au fur et aï¿½ mesure, dans lequel vous creerez un objet de cette classe
+ * tests au fur et a mesure, dans lequel vous creerez un objet de cette classe
  * et affichez ses informations, avec les donnees de votre choix. 2 - Les
  * methodes - masseSalariale() : retourne le total des salaires bruts de tous
  * les employes figurant dans le tableau d'employes - moyenne Salariale() :
@@ -49,6 +49,9 @@ public class Departement {
 	//Modification avec ArrayList
 	public void setTabEmploye(int i, Employe employe) {
 		this.tabEmploye.add(i, employe);
+	}
+	public List<Employe> getTab() {
+		return tabEmploye;
 	}
 
 	//Constructeurs	
@@ -100,14 +103,14 @@ public class Departement {
 		setTabEmploye(getNbrEmploye(), new Vendeur(nom, prenom, date, heures, salaireEmploye, montantVente, tauxCommission));
 		setNbrEmploye(getNbrEmploye() + 1);
 	}
-	//méthode qui affiche les éléments du tableau dans une ligne
+	//methode qui affiche les elements du tableau dans une ligne
 	public void  afficher(List<Employe> tabEmploye2){
 		for (int i=0; i<tabEmploye2.size(); i++)
 			System.out.print(tabEmploye2.get(i).codeAcces()+"  ");
 		System.out.println();
 	}
 	
-	//Comparator stockant la méthode de compararaison par nom
+	//Comparator stockant la methode de compararaison par nom
 	public static Comparator<Employe> COMPARE_BY_NAME = new Comparator<Employe>() {
         public int compare(Employe one, Employe other) {
             return one.getNom().compareTo(other.getNom());
@@ -129,14 +132,15 @@ public class Departement {
 	        if(trouve==true){
 	            return temp;
 	        }
-	        else return null;
+	        else
+	        	return null;
 	    }
 
 
 	/*public void addEmploye(String nom, String prenom, String date, double salaireEmploye, int heures) throws Exception {
         setTabEmploye(getNbrEmploye(), new Employe(nom, prenom, date, heures, salaireEmploye));
         setNbrEmploye(getNbrEmploye() + 1);
-    }*/
+    }
 	//Main pour tester la classe
 	public static void main(String[] args) {
      Departement dep1= new Departement("Programmation");
@@ -166,6 +170,6 @@ public class Departement {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-     }
+     }*/
 
 }
