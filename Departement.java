@@ -104,9 +104,9 @@ public class Departement {
 		setNbrEmploye(getNbrEmploye() + 1);
 	}
 	//methode qui affiche les elements du tableau dans une ligne
-	public void  afficher(List<Employe> tabEmploye2){
-		for (int i=0; i<tabEmploye2.size(); i++)
-			System.out.print(tabEmploye2.get(i).codeAcces()+"  ");
+	public void  afficher(){
+		for (int i=0; i<tabEmploye.size(); i++)
+			System.out.print(tabEmploye.get(i).codeAcces()+"  ");
 		System.out.println();
 	}
 	
@@ -135,6 +135,14 @@ public class Departement {
 	        else
 	        	return null;
 	    }
+	  public String listeTriée(){
+	    	Collections.sort(tabEmploye,COMPARE_BY_NAME);
+	  	String chaine = "";
+	  	for(Employe e : tabEmploye){
+	  		chaine +=e.toString();	
+	  	}
+	  	return chaine;
+	  }
 
 
 	/*public void addEmploye(String nom, String prenom, String date, double salaireEmploye, int heures) throws Exception {
