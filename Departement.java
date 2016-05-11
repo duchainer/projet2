@@ -18,15 +18,11 @@ import java.util.*;
 public class Departement {
 
 	//Attributs
-	private final int MAX = 20;
 	private String nomDepartement;
 	private int nbrEmploye;
 	private List<Employe> tabEmploye = new ArrayList<Employe>();
 
-	public int getMAX() {
-		return MAX;
-	}
-
+	//Get-Set
 	public String getNomDepartement() {
 		return nomDepartement;
 	}
@@ -103,12 +99,12 @@ public class Departement {
 		setTabEmploye(getNbrEmploye(), new Vendeur(nom, prenom, date, heures, salaireEmploye, montantVente, tauxCommission));
 		setNbrEmploye(getNbrEmploye() + 1);
 	}
-	//methode qui affiche les elements du tableau dans une ligne
+	/*//methode qui affiche les elements du tableau dans une ligne
 	public void  afficher(){
 		for (int i=0; i<tabEmploye.size(); i++)
-			System.out.print(tabEmploye.get(i).codeAcces()+"  ");
+			System.out.print(tabEmploye.get(i).toString()+"  ");
 		System.out.println();
-	}
+	}*/
 	
 	//Comparator stockant la methode de compararaison par nom
 	public static Comparator<Employe> COMPARE_BY_NAME = new Comparator<Employe>() {
@@ -116,6 +112,7 @@ public class Departement {
             return one.getNom().compareTo(other.getNom());
         }
     };
+
 
 
 
@@ -135,9 +132,10 @@ public class Departement {
 	        else
 	        	return null;
 	    }
-	  public String listeTriée(){
+	  public String listeTriee(){
+		  //Appel au trieur
 	    	Collections.sort(tabEmploye,COMPARE_BY_NAME);
-	  	String chaine = "";
+	  	String chaine = "Code Acces // Nom // Prenom // Salaire brut\n";
 	  	for(Employe e : tabEmploye){
 	  		chaine +=e.toString();	
 	  	}
@@ -168,7 +166,7 @@ public class Departement {
 	}
      
      Collections.sort(dep1.tabEmploye,Departement.COMPARE_BY_NAME);
-     dep1.afficher(dep1.tabEmploye);
+     dep1.afficher();
      //System.out.println(dep1.tri(dep1.tabEmploye,0,dep1.tabEmploye.size()-1));
      try {
     	 System.out.println(dep1.rechercher("RA34").getNom());

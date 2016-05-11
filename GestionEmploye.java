@@ -43,10 +43,11 @@ public class GestionEmploye {
             // les differentes options du menu
             switch (option) {
                 case 1:  // Demande la saisie de tous les attributs d'un employe et affiche un message de confirmation
-                    if (dep1.getNbrEmploye() >= dep1.getMAX()) {
+                    /*INUTILE PUISQU'on utilise maintenant un array
+                     * if (dep1.getNbrEmploye() >= dep1.MAX) {
                         JOptionPane.showMessageDialog(null, "Il y a deja  20 employes (C'est le maximum)", "Enregistrer un employe DE TROP", JOptionPane.ERROR_MESSAGE);
                         break;
-                    }
+                    }*/
 
                     if (JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer un employe?", "Enregistrement",
                             JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {

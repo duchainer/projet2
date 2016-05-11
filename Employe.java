@@ -133,9 +133,11 @@ public class Employe implements Finance {
 
     @Override
     public String toString() {
-        return ""+codeAcces() + ", " + getNom() + ", " + getPrenom() + ", " + salaireBrut();
+        return codeAcces() + " // " + getNom() + " // " + getPrenom() + " // " + salaireBrut();
     }
-
+    public String allVars() {
+        return codeAcces()+" // "+getNom()+" // "+getPrenom()+" // "+date+" // "+motDePasse+" // "+heures+" // "+tauxHoraire;
+    }
     //Autres methodes
     //Retourne le code d' acces de l'employe
     public String codeAcces() {
