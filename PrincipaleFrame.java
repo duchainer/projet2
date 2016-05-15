@@ -1,12 +1,7 @@
 import javax.swing.*;
-
 import java.awt.GridLayout;
 import java.awt.event.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -14,11 +9,13 @@ import java.util.Collections;
  * 
  * 
  * @author Raphael Duchaine 19/04/2016
+ *						  + 13/05/2015
  */
 public class PrincipaleFrame extends JFrame implements ActionListener {
 	//Attributs
 	Departement dep1 = new Departement ("SIM");
-	String relativeFilePath ="/donnees/";
+	public String filePath = new File("").getAbsolutePath()+"/donnees/";
+	Boolean initialise = false;
 
 
 	//Attributs graphiques
@@ -41,7 +38,7 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 		//Ajoute les champs de texte
 		addChampDeTexte("Nom Employe");
 		addChampDeTexte("Prenom Employe");
-		addChampDeTexte("Date D'Embauche");
+		addChampDeTexte("Date Embauche");
 		addChampDeTexte("Heures travaillees");
 		addChampDeTexte("Taux Horaire");
 		//Ajoute les 2 boutons radio
@@ -56,30 +53,13 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 		addBouton("Enregistrement");
 		addEspace(); //Permet de laisser le bouton Enregistrement seul en haut a gauche
 		addEspace();
-		addEspace();
+		addBouton("Initialisation");
 		addBouton("Affichage");
 		addBouton("Liste");
 		addBouton("Statistiques");
 		addBouton("Quitter");
 
 		add( simplePanel );                             //ajoute panneau a  la fenetre
-		//TEST:
-		/*
-		try{
-			 dep1.addVendeur("M", "Raph", "12981234", 30, 32,34,23);
-		 		dep1.addEmploye("R", "Raph", "12981234", 30, 32);
-		 		 dep1.addEmploye("T", "Raph", "12981234", 30, 32);
-		     	 dep1.addEmploye("X", "Raph", "12981234", 30, 32);
-		    	 dep1.addEmploye("Z", "Raph", "12981234", 30, 32);
-				dep1.addEmploye("D", "Raph", "12981234", 30, 32);
-				 dep1.addEmploye("B", "Raph", "12981234", 30, 32);
-		    	 dep1.addEmploye("Y", "Raph", "12981234", 30, 32);
-				dep1.addEmploye("C", "Raph", "12981234", 30, 32);
-				 dep1.addEmploye("L", "Raph", "12981234", 30, 32);
-
-		}catch(Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);
-		}*/
 
 	}
 
@@ -102,7 +82,6 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		Collections.sort(dep1.getTab(),Departement.COMPARE_BY_NAME);
 		try {
 			if(event.getSource()==boutons.get(0)){
 				if(radio2.isSelected()){
@@ -120,9 +99,11 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(null, e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);
 		}
 		if(event.getSource()==boutons.get(1)){
-			rechercher();
-		}
-		if(event.getSource()==boutons.get(2)){
+			if(initialise){
+				JOptionPane.showMessageDialog(null, "Initialisation déjà faite.","DONE",JOptionPane.INFORMATION_MESSAGE);
+			}else
+				initialiser();
+		}if(event.getSource()==boutons.get(2)){
 			affichage();
 		}if(event.getSource()==boutons.get(3)){
 			liste();
@@ -135,11 +116,15 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 	}
 	//Autres methodes
 
+
+
 	private void clean() {
 		for(JTextField elem:champs)
 			elem.setText("");
 		radio1.setSelected(true);
 	}
+
+
 
 	private void creeVendeur() throws Exception {
 		int montantVente=Integer.parseInt(JOptionPane.showInputDialog(null,"Entrer le montant des ventes:",
@@ -161,21 +146,74 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 
 	}
 
-	private void rechercher() {
-		// TODO Auto-generated method stub
+	private void initialiser() {
+		try{
+			BufferedReader br = new BufferedReader(new FileReader(filePath+"/employes.txt"));
+			String ligne;
+			while (!(ligne=br.readLine()).equals("---------------")){
+				String nom=ligne;
+				String prenom=br.readLine();
+				String date=br.readLine();
+				int heures = Integer.parseInt(br.readLine());
+				Double tauxHoraire = Double.parseDouble(br.readLine());
+				br.mark(1000);
+				if(Character.isDigit((ligne=br.readLine()).charAt(0))){
+					int montantVente = Integer.parseInt(ligne);
+					Double tauxCommission = Double.parseDouble(br.readLine());
+					dep1.addVendeur(nom, prenom, date, heures, tauxHoraire, montantVente, tauxCommission);
+				}else{
+					br.reset();
+					dep1.addEmploye(nom, prenom, date, heures, tauxHoraire);
+				}
+				
+
+			}
+			br.close();
+			initialise=true;
+			JOptionPane.showMessageDialog(null, "Initialisation Faite.","DONE",JOptionPane.INFORMATION_MESSAGE);
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, e.toString(),"ERREUR",JOptionPane.ERROR_MESSAGE);
+			dep1.resetTab();
+		}
+
 
 	}
 
-
 	private void affichage() {
+		//TODO writing
 		String code=JOptionPane.showInputDialog(null,"Entrer le code de l'employe:","Affichage",JOptionPane.QUESTION_MESSAGE);
-		try{
-			JOptionPane.showMessageDialog(null, dep1.rechercher(code).afficher(),"Affichage",JOptionPane.INFORMATION_MESSAGE);
-		}catch (NullPointerException e1) {
+		try{ 
+			Employe employe = dep1.rechercher(code);
+			JOptionPane.showMessageDialog(null, employe.afficher(),"Affichage",JOptionPane.INFORMATION_MESSAGE);
+			String nomFichier =(employe.getNom()+"_"+employe.getPrenom().charAt(0));
+			ArrayList<String> variables = employe.allVars();
+			BufferedWriter bw = new BufferedWriter(new FileWriter(filePath+(nomFichier+".txt")));
+			if(variables.size()==7){
+				bw.write("VENDEUR");
+				bw.newLine();
+			}
+			bw.write("Nom: "+variables.get(0));
+			bw.newLine();
+			bw.write("Prénom: "+variables.get(1));
+			bw.newLine();
+			bw.write("Date Embauche: "+variables.get(2));
+			bw.newLine();
+			bw.write("Taux Horaire: "+variables.get(3)+"$");
+			bw.newLine();
+			bw.write("Nombre heures: "+variables.get(4));
+			bw.newLine();
+			if(variables.size()==7){
+				bw.write("Montant Ventes: "+variables.get(5)+"$");
+				bw.newLine();
+				bw.write("Taux Commission: "+variables.get(6));
+			}
+			bw.close();
+
+		}catch (NullPointerException e) {
 			JOptionPane.showMessageDialog(null, "Code errone ou inexistant","ERREUR",JOptionPane.ERROR_MESSAGE);
 		}
-		catch (Exception e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -190,33 +228,45 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 		//On affiche la liste
 		JOptionPane.showMessageDialog(null, dep1.listeTriee(), "Liste des employes", JOptionPane.INFORMATION_MESSAGE);
 
-		try { 
-			//	Écriture(création) du fichier listeEmployes.txt
-			//get path to project
-			String filePath = new File("").getAbsolutePath();
-			//System.out.println( filePath );
-			//Création du flux bufferisee
-			BufferedWriter bf;
+		//	Écriture(création) du fichier listeEmployes.txt
+		//Création du flux bufferisee
+		saveInFile();
 
-			bf = new BufferedWriter(new FileWriter(filePath+relativeFilePath+"listeEmployes.txt"));
-			bf.write("***Liste des Employes***");
-			bf.write("Code d'acces // Nom // Prenom // Date Embauche // Mot de Passe // Heures // Taux Horaire");
+	}
+
+	private void saveInFile(){
+		try{
+			BufferedWriter bw = new BufferedWriter(new FileWriter(filePath+"employes.txt"));
 			for(Employe e:dep1.getTab()){
-				bf.write(e.allVars());
+				bw.write(""+e.getNom());
+				bw.newLine();
+				bw.write(""+e.getPrenom());
+				bw.newLine();
+				bw.write(""+e.getDate());
+				bw.newLine();
+				bw.write(""+e.getHeures());
+				bw.newLine();
+				bw.write(""+e.getTauxHoraire());
+				bw.newLine();
+				if(e instanceof Vendeur){
+					Vendeur v = (Vendeur)e;
+					bw.write(""+v.getMontantVentes());
+					bw.newLine();
+					bw.write(""+v.getTauxCommission());
+					bw.newLine();
+				}
+
 			}
-			bf.close();
-			
-		} catch (IOException e) {
+			bw.write("---------------");
+			bw.close();
+		}catch (IOException e){
 			JOptionPane.showMessageDialog(null, e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);
 		}
-
-		
 	}
 
 	private void statistiques() {
 		//AFFICHE TOUTES LES INFORMATIONS SUR DEPARTEMENT
 		//Utilisation du toString() de Departement
-
 		try {
 			JOptionPane.showMessageDialog(null, dep1.toString(), "Statistiques", JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception e) {
@@ -230,6 +280,7 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 		int reponse = JOptionPane.showConfirmDialog(null, "Le metier de gestionnaire te fait peur?",
 				"Se Sauver?", JOptionPane.YES_NO_OPTION);
 		if (reponse == JOptionPane.YES_OPTION) {
+			saveInFile();
 			System.exit(0);
 		} 
 

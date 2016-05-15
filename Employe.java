@@ -1,8 +1,10 @@
+import java.util.ArrayList;
+
 //import javax.swing.*;
 
 /**
- * 1- Les attributs (choisir les types appropries): -nom - prenom - date de
- * naissance (chaine de longueur fixe, format : JJMMAAAA) - mot de passe -
+ * 1- Les attributs (choisir les types appropries): -nom - prenom - date Embauche
+ *  (chaine de longueur fixe, format : JJMMAAAA) - mot de passe -
  * nombre d'heures travaillees - taux horaire 2 - Dans la meme classe, definir
  * les methodes suivantes : - codeAcces() : qui retourne le code d'acces de
  * l'employe en le construisant comme suit : 1ere lettre du prenom suivi par le
@@ -14,8 +16,9 @@
  * apres deduction des taxes, selon le taux fourni en parametre (en
  * pourcentage).
  * 
- *@author Patrick Domingues 10/04/2016
+ *@author Patrick Domingues 13/05/2016
  *@author2 Raphael Duchaine 12/04/2016
+ *
 */
 public class Employe implements Finance {
 
@@ -124,7 +127,7 @@ public class Employe implements Finance {
         return "\nCode d'acces: "+ codeAcces()
                 + "\nNom: " + getNom()
                 + "\nPrenom: " + getPrenom()
-                + "\nDate de naissance(JJMMAAAA): " + getDate()
+                + "\nDate Embauche(JJMMAAAA): " + getDate()
                 + "\nMot de passe: " + getMotDePasse()
                 + "\nHeures travaillees: " + getHeures()
                 + " heures\nTaux horaire: "+ getTauxHoraire() + "$/heures"
@@ -135,8 +138,14 @@ public class Employe implements Finance {
     public String toString() {
         return codeAcces() + " // " + getNom() + " // " + getPrenom() + " // " + salaireBrut();
     }
-    public String allVars() {
-        return codeAcces()+" // "+getNom()+" // "+getPrenom()+" // "+date+" // "+motDePasse+" // "+heures+" // "+tauxHoraire;
+    public ArrayList<String> allVars() {
+    	ArrayList<String> variables = new ArrayList<String>();
+    	variables.add(getNom());
+    	variables.add(getPrenom());
+    	variables.add(getDate());
+    	variables.add(Integer.toString(getHeures()));
+    	variables.add(Double.toString(getTauxHoraire()));
+        return variables;
     }
     //Autres methodes
     //Retourne le code d' acces de l'employe
@@ -172,30 +181,4 @@ public class Employe implements Finance {
     	setTauxHoraire((getTauxHoraire()* (1-TAUX_DEDUCTION)));
     }
 
-    //main (sert uniquement a tester)
-    /*public static void main(String[] args) {
-        try {
-            Employe employe = new Employe(JOptionPane.showInputDialog(null, "Veuillez entrer votre nom: "),
-                    JOptionPane.showInputDialog(null, "Veuillez entrer votre prenom: "),
-                    JOptionPane.showInputDialog(null, "Veuillez entrer votre date de naissance (en format JJMMAAAA): "),
-                    Integer.parseInt(JOptionPane.showInputDialog(null, "Veuillez entrer votre nombre d'heures travaillees: ")),
-                    Double.parseDouble(JOptionPane.showInputDialog(null, "Veuillez entrer votre salaire horaire: ")));
-
-            Vendeur vendeur = new Vendeur(JOptionPane.showInputDialog(null, "Veuillez entrer votre nom: "),
-                    JOptionPane.showInputDialog(null, "Veuillez entrer votre prenom: "),
-                    JOptionPane.showInputDialog(null, "Veuillez entrer votre date de naissance (en format JJMMAAAA): "),
-                    Integer.parseInt(JOptionPane.showInputDialog(null, "Veuillez entrer votre nombre d'heures travaillees: ")),
-                    Double.parseDouble(JOptionPane.showInputDialog(null, "Veuillez entrer votre salaire horaire: ")),
-                    Integer.parseInt(JOptionPane.showInputDialog(null, "Veuillez entrer votre montant de ventes: ")),
-                    Double.parseDouble(JOptionPane.showInputDialog(null, "Veuillez entrer votre taux de commission: ")));
-
-            JOptionPane.showMessageDialog(null, employe.codeAcces());
-            JOptionPane.showMessageDialog(null, "toString de l'employe: " + employe.toString());
-
-            JOptionPane.showMessageDialog(null, vendeur.codeAcces());
-            JOptionPane.showMessageDialog(null, "toString du vendeur: " + vendeur.toString());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }*/
 }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  *
  * @author Patrick Domingues 09/04/2016
@@ -55,7 +57,7 @@ public class Vendeur extends Employe implements Finance {
                 + "\nCode d'acces: "+ codeAcces()
                 + "\nNom: " + getNom()
                 + "\nPrenom: " + getPrenom()
-                + "\nDate de naissance(JJMMAAAA): " + getDate()
+                + "\nDate Embauche(JJMMAAAA): " + getDate()
                 + "\nMot de passe: " + getMotDePasse()
                 + "\nHeures travaillees: " + getHeures()
                 + "\nTaux horaire: "+ getTauxHoraire() + "$/heures"
@@ -67,6 +69,19 @@ public class Vendeur extends Employe implements Finance {
     @Override
     public String toString() {
         return "VENDEUR: "+codeAcces() + ", " + getNom() + ", " + getPrenom() + ", " + salaireBrut();
+    }
+    
+    @Override
+    public ArrayList<String> allVars() {
+    	ArrayList<String> variables = new ArrayList<String>();
+    	variables.add(getNom());
+    	variables.add(getPrenom());
+    	variables.add(getDate());
+    	variables.add(Integer.toString(getHeures()));
+    	variables.add(Double.toString(getTauxHoraire()));
+    	variables.add(Integer.toString(getMontantVentes()));
+    	variables.add(Double.toString(getTauxCommission()));
+        return variables;
     }
 
     //Surdefinition de la methode initMotPasse()

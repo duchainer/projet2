@@ -38,16 +38,19 @@ public class Departement {
 	public void setNbrEmploye(int nbrEmploye) {
 		this.nbrEmploye = nbrEmploye;
 	}
-	//Modification avec ArrayList
+	
 	public Employe getTabEmploye(int i) {
 		return tabEmploye.get(i);
 	}
-	//Modification avec ArrayList
+	
 	public void setTabEmploye(int i, Employe employe) {
 		this.tabEmploye.add(i, employe);
 	}
 	public List<Employe> getTab() {
 		return tabEmploye;
+	}
+	public void resetTab() {
+		tabEmploye= new ArrayList<Employe>();
 	}
 
 	//Constructeurs	
@@ -90,21 +93,15 @@ public class Departement {
 	}
 
 	//Methode permettant d'ajouter un employe au bout de tabEmploye
-	public void addEmploye(String nom, String prenom, String date, int heures, double salaireEmploye) throws Exception {
-		setTabEmploye(getNbrEmploye(), new Employe(nom, prenom, date, heures, salaireEmploye));
+	public void addEmploye(String nom, String prenom, String date, int heures, double tauxHoraire) throws Exception {
+		setTabEmploye(getNbrEmploye(), new Employe(nom, prenom, date, heures, tauxHoraire));
 		setNbrEmploye(getNbrEmploye() + 1);
 	}
 
-	public void addVendeur(String nom, String prenom, String date, int heures, double salaireEmploye, int montantVente, double tauxCommission ) throws Exception {
-		setTabEmploye(getNbrEmploye(), new Vendeur(nom, prenom, date, heures, salaireEmploye, montantVente, tauxCommission));
+	public void addVendeur(String nom, String prenom, String date, int heures, double tauxHoraire, int montantVente, double tauxCommission ) throws Exception {
+		setTabEmploye(getNbrEmploye(), new Vendeur(nom, prenom, date, heures, tauxHoraire, montantVente, tauxCommission));
 		setNbrEmploye(getNbrEmploye() + 1);
 	}
-	/*//methode qui affiche les elements du tableau dans une ligne
-	public void  afficher(){
-		for (int i=0; i<tabEmploye.size(); i++)
-			System.out.print(tabEmploye.get(i).toString()+"  ");
-		System.out.println();
-	}*/
 	
 	//Comparator stockant la methode de compararaison par nom
 	public static Comparator<Employe> COMPARE_BY_NAME = new Comparator<Employe>() {
@@ -114,9 +111,7 @@ public class Departement {
     };
 
 
-
-
-	//Methode qui retourne un employe du departement ayant le code specifie en parametre, ou null s il n existe pas dans le departement
+	//Retourne un employe du departement ayant le code specifie en parametre, ou null s il n existe pas dans le departement
 	 public Employe rechercher(String code){
 	        boolean trouve= false;
 	        Employe temp= null;
@@ -138,44 +133,8 @@ public class Departement {
 	  	String chaine = "Code Acces // Nom // Prenom // Salaire brut\n";
 	  	for(Employe e : tabEmploye){
 	  		chaine +=e.toString();	
+	  		chaine+="\n";
 	  	}
 	  	return chaine;
 	  }
-
-
-	/*public void addEmploye(String nom, String prenom, String date, double salaireEmploye, int heures) throws Exception {
-        setTabEmploye(getNbrEmploye(), new Employe(nom, prenom, date, heures, salaireEmploye));
-        setNbrEmploye(getNbrEmploye() + 1);
-    }
-	//Main pour tester la classe
-	public static void main(String[] args) {
-     Departement dep1= new Departement("Programmation");
-     try {
-    	 dep1.addEmploye("M", "Raph", "12981234", 30, 32);
- 		dep1.addEmploye("R", "Raph", "12981234", 30, 32);
- 		 dep1.addEmploye("T", "Raph", "12981234", 30, 32);
-     	 dep1.addEmploye("X", "Raph", "12981234", 30, 32);
-    	 dep1.addEmploye("Z", "Raph", "12981234", 30, 32);
-		dep1.addEmploye("D", "Raph", "12981234", 30, 32);
-		 dep1.addEmploye("B", "Raph", "12981234", 30, 32);
-    	 dep1.addEmploye("Y", "Raph", "12981234", 30, 32);
-		dep1.addEmploye("C", "Raph", "12981234", 30, 32);
-		 dep1.addEmploye("L", "Raph", "12981234", 30, 32);
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-     
-     Collections.sort(dep1.tabEmploye,Departement.COMPARE_BY_NAME);
-     dep1.afficher();
-     //System.out.println(dep1.tri(dep1.tabEmploye,0,dep1.tabEmploye.size()-1));
-     try {
-    	 System.out.println(dep1.rechercher("RA34").getNom());
-		System.out.println("Masse salarial:"+dep1.masseSalariale());
-		System.out.println("Moyenne salarial:"+dep1.moyenneSalariale());
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-     }*/
-
 }
