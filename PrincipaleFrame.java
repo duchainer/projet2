@@ -9,7 +9,7 @@ import java.util.Collections;
  * 
  * 
  * @author Raphael Duchaine 19/04/2016
- *						  + 13/05/2015
+ *		   Patrick Domingues + 15/05/2016
  */
 public class PrincipaleFrame extends JFrame implements ActionListener {
 	//Attributs
@@ -38,7 +38,7 @@ public class PrincipaleFrame extends JFrame implements ActionListener {
 		//Ajoute les champs de texte
 		addChampDeTexte("Nom Employe");
 		addChampDeTexte("Prenom Employe");
-		addChampDeTexte("Date Embauche");
+		addChampDeTexte("Date de naissance (JJMMAAAA)");
 		addChampDeTexte("Heures travaillees");
 		addChampDeTexte("Taux Horaire");
 		//Ajoute les 2 boutons radio
